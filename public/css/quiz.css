@@ -1,0 +1,16 @@
+.timer{
+    height: 60px;
+    text-align: center;
+}
+
+.main{
+    display: flex;
+}
+
+.quiz{
+    width: 60%;
+}
+
+.question{
+    width: 30%;
+}

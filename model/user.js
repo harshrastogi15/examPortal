@@ -7,7 +7,7 @@ const schema = new mongoose.Schema(
         password: { type: String, required: true },
         marks: { type: Number },
         attempted: { type: Boolean, default: false },
-        attempted: [{ type: Object }]
+        answer: [{ type: Object }]
     }
 )
 
