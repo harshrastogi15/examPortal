@@ -15,12 +15,21 @@ function fetchUser() {
     })
         .then((res) => res.json())
         .then((body) => {
-            console.log(body);
+            // console.log(body);
             if (body.status === 0) {
                 if (body.data.stream.length === 0) {
                     window.location.href = '/data'
                 }
-                console.log(body.data)
+                // console.log(body.data)
+                var html = `
+                        <h1>${body.data.name}</h1>
+                    <div class="otherdetail">
+                        <h4>Application No : ${body.data.applicationNo},</h4>
+                        <h4>Stream : ${body.data.stream},</h4>
+                        <h4>Program : ${body.data.program}</h4>
+                    </div>  
+                `;
+                document.getElementById('Detail').innerHTML = html
                 getquestion(body.data.stream);
             } else {
                 localStorage.removeItem('token')
@@ -97,7 +106,7 @@ const displayquestion = (data) => {
 
         html += `</div>`
         if(Number(i) === data.length - 1){
-            console.log(i);
+            // console.log(i);
             html += `<div class="submitbutton">
                     <button type="submit" onclick="sendanswer(${data[i].id})"> Submit </button>
                 </div>`
@@ -107,20 +116,6 @@ const displayquestion = (data) => {
     document.getElementById('quizdisplay').innerHTML = html;
     document.getElementById('questionshow').innerHTML = htQuestion;
     previous(0, data.length);
-}
-
-
-function setAnswer(id, i, answer) {
-    // console.log(i);
-    // console.log(answer)
-    tempanswer = answer;
-
-    for (let index = 0; index < 4; index++) {
-        var value = document.getElementById(`${id}_option${index}`);
-        value.style.background = 'white';
-    }
-    var value = document.getElementById(`${id}_option${i}`);
-    value.style.background = 'rgb(144, 188, 133)';
 }
 
 function previous(i, sz) {
@@ -141,4 +136,24 @@ function next(i, sz) {
     }
     var value = document.getElementById(`${i}`);
     value.style.display = 'block'
+}
+
+
+// answer updation
+var mp = new Map();
+
+
+function setAnswer(id, i, answer) {
+    tempanswer = answer;
+    mp[id]={
+        answer:answer,
+        i:i
+    }
+    for (let index = 0; index < 4; index++) {
+        var value = document.getElementById(`${id}_option${index}`);
+        value.style.background = 'white';
+    }
+    var value = document.getElementById(`${id}_option${i}`);
+    value.style.background = 'rgb(144, 188, 133)';
+    console.log(mp);
 }
