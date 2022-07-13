@@ -17,10 +17,11 @@ function fetchUser() {
         .then((body) => {
             console.log(body);
             if (body.status === 0) {
-                if(body.data.stream.length===0){
+                if (body.data.stream.length === 0) {
                     window.location.href = '/data'
                 }
                 console.log(body.data)
+                getquestion(body.data.stream);
             } else {
                 localStorage.removeItem('token')
                 window.location.href = '/'
@@ -38,8 +39,16 @@ if (localStorage.getItem('token')) {
     window.location.href = '/'
 }
 
-const getquestion = () => {
-    fetch(`/question/sendquestion`)
+const getquestion = (stream) => {
+    fetch(`/question/sendquestion`, {
+        method:'POST',
+        headers:{
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+           'stream':`${stream}`
+        })
+    })
         .then((res) => res.json())
         .then((res) => {
             // console.log(res);
@@ -49,10 +58,9 @@ const getquestion = () => {
         })
         .catch()
 }
-getquestion();
 
 const displayquestion = (data) => {
-    console.log(data);
+    // console.log(data);
     var html = ``;
     for (i in data) {
         var idxnew = (Number)(i) + 1;
@@ -109,7 +117,6 @@ function setAnswer(id, i, answer) {
 
 function previous(i, sz) {
     tempanswer = "";
-    console.log(i);
     for (let index = 0; index < sz; index++) {
         var value = document.getElementById(`${index}`);
         value.style.display = 'none'

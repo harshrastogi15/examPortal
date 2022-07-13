@@ -79,17 +79,51 @@ router.post('/addquestion', (req, res) => {
 })
 
 
-router.get('/sendquestion', async (req, res) => {
+router.post('/sendquestion', async (req, res) => {
     try {
-        var ques = await question.find({});
+        var stream = req.body.stream;
         var data = new Array();
-        for (i in ques) {
-            data.push({
-                question: ques[i].ques,
-                choice: ques[i].choice,
-                id: ques[i]._id
-            })
+        if (stream === 'CSE') {
+            var ques = await CSE.find({});
+            for (i in ques) {
+                data.push({
+                    question: ques[i].ques,
+                    choice: ques[i].choice,
+                    id: ques[i]._id
+                })
+            }
         }
+        else if (stream === 'MEA') {
+            var ques = await MEA.find({});
+            for (i in ques) {
+                data.push({
+                    question: ques[i].ques,
+                    choice: ques[i].choice,
+                    id: ques[i]._id
+                })
+            }
+        }
+        else if (stream === 'ECE') {
+            var ques = await ECE.find({});
+            for (i in ques) {
+                data.push({
+                    question: ques[i].ques,
+                    choice: ques[i].choice,
+                    id: ques[i]._id
+                })
+            }
+        }
+        else if (stream === 'Math') {
+            var ques = await Math.find({});
+            for (i in ques) {
+                data.push({
+                    question: ques[i].ques,
+                    choice: ques[i].choice,
+                    id: ques[i]._id
+                })
+            }
+        }
+
         res.json({ status: 0, data })
     } catch (error) {
         res.json({ status: -1 })

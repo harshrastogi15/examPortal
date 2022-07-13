@@ -66,9 +66,6 @@
         </form>
     </div>
     <script>
-        if (localStorage.getItem('token')) {
-            window.location.href = '/quiz'
-        }
         document.getElementById('loginsubmit').addEventListener('submit', (e) => {
             e.preventDefault();
             fetch(event.target.action, {
