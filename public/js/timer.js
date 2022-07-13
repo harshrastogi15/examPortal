@@ -24,16 +24,13 @@ timer = setInterval(function() {
 function timeBetweenDates(toDate) {
   var dateEntered = toDate;
   var now = new Date();
-  if(dateEntered < now){
-    console.log('FINISH')
+  if(now > dateEntered){
+    submitAnswer();
   }
-  // console.log(dateEntered)
-//   getDate();
   var difference = dateEntered.getTime() - now.getTime();
 
   if (difference <= 0) {
 
-    // Timer done
     clearInterval(timer);
   
   } else {

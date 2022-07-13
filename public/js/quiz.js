@@ -1,4 +1,3 @@
-
 var tempanswer = "";
 
 function logout() {
@@ -32,7 +31,7 @@ function fetchUser() {
                     </div>  
                 `;
                 document.getElementById('Detail').innerHTML = html
-                getquestion(body.data.stream);
+                getquiz(body.data.stream);
             } else {
                 localStorage.removeItem('token')
                 window.location.href = '/'
@@ -50,7 +49,7 @@ if (localStorage.getItem('token')) {
     window.location.href = '/'
 }
 
-const getquestion = (stream) => {
+const getquiz = (stream) => {
     fetch(`/question/sendquestion`, {
         method: 'POST',
         headers: {
@@ -79,8 +78,7 @@ const displayquestion = (data) => {
         htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i + 1}</div>`
         html += `
         <div class="mcq" id="${i}">
-                <h3>${idxnew}</h3>
-                <h1>${data[i].question}</h1>
+                <h1><span>${idxnew}.</span> ${data[i].question}</h1>
                 <ul>`
 
         for (j in data[i].choice) {
@@ -201,7 +199,7 @@ const submitAnswer = () => {
         })
         // console.log(value[key])
     }
-    // console.log(arr);
+    console.log(arr);
     fetch('/user/uploadAnswer', {
         method: 'POST',
         headers: {
