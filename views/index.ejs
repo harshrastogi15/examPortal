@@ -1,12 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .loginform {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        #loginsubmit{
+            border: 2px solid black;
+            padding: 20px;
+        }
+        .inputdiv{
+            margin: 10px;
+        }
+
+        .inputdiv input{
+            width: 96%;
+            font-size: 20px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>HERE</h1>
+    <div class="loginform">
+        <div id="warning" style="color: red;"></div>
+        <form action="/user/login" id="loginsubmit" method="post">
+            <div class="inputdiv">
+                <label for="email">Email: </label>
+                <input id="email" type="email" name="email">
+            </div>
+            <div class="inputdiv">
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="inputdiv" style="text-align: center;">
+            <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('loginsubmit').addEventListener('submit', (e) => {
+            e.preventDefault();
+            fetch(event.target.action, {
+                method: "POST",
+                body: new URLSearchParams(new FormData(event.target)),
+            })
+                .then((res) => res.json())
+                .then((body) => {
+                    console.log(body);
+                    if (body.status === 0) {
+                        localStorage.setItem('token', `${body.authtoken}`)
+                        window.location.href = '/quiz'
+                    } else {
+                        document.getElementById('warning').innerHTML="Invalid Credentials"
+                    }
+                })
+                .catch((error) => {
+                    document.getElementById('warning').innerHTML="Invalid Credentials"
+                });
+        })
+    </script>
 </body>
+
 </html>

@@ -41,10 +41,11 @@ router.post(
     "/login",
     async (req, res) => {
         const { email, password } = req.body;
+        // console.log(req.body)
         try {
-            let user = await user.findOne({ email: email });
+            let user = await User.findOne({ email: email });
             if (!user) {
-                return res.status(400).json({ status: -1 })
+                return res.json({ status: -1 })
             }
             const match = await bcrypt.compare(password, user.password);
             if (match) {
@@ -58,7 +59,7 @@ router.post(
             }
 
         } catch (error) {
-            res.status(500).json({ status: -2 });
+            res.status(500).json({ status: -2 ,error});
         }
     }
 );
