@@ -11,16 +11,14 @@ router.post(
     "/register",
     async (req, res) => {
         try {
-            let user = await User.findOne({ email: req.body.email });
+            let user = await User.findOne({ applicationNo: req.body.applicationNo });
             if (user) {
                 return res.status(400).json({ status: 1 });
             }
             bcrypt.hash(req.body.password, 10, async function (err, hash) {
                 var arr = new Array();
                 user = await User.create({
-                    name: req.body.name,
-                    email: req.body.email,
-                    address: req.body.address,
+                    applicationNo: req.body.applicationNo,
                     password: hash,
                     answer : arr
                 })
@@ -40,10 +38,10 @@ router.post(
 router.post(
     "/login",
     async (req, res) => {
-        const { email, password } = req.body;
+        const { applicationNo, password } = req.body;
         // console.log(req.body)
         try {
-            let user = await User.findOne({ email: email });
+            let user = await User.findOne({ applicationNo: applicationNo });
             if (!user) {
                 return res.json({ status: -1 })
             }
@@ -72,12 +70,28 @@ router.post('/access', jwtaccess, async (req, res) => {
         }
         var data = {
             name: user.name,
-            email: user.email,
-            address: user.address,
-            phone: user.phone,
-            pincode: user.pincode
+            stream : user.stream,
+            applicationNo : user.applicationNo,
+            program : user.program
         }
         res.json({ status: 0, data });
+    } catch (error) {
+        res.status(500).json({ status: -2 });
+    }
+})
+
+
+router.post('/adddata', jwtaccess, async (req, res) => {
+    try {
+        var user = await User.findByIdAndUpdate(req.userid,{
+            name:req.body.name,
+            stream:req.body.stream,
+            program:req.body.program
+        });
+        if (!user) {
+            return res.status(400).json({ status: -1 });
+        }
+        res.json({ status: 0 });
     } catch (error) {
         res.status(500).json({ status: -2 });
     }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detail</title>
     <style>
         .loginform {
             display: flex;
@@ -14,18 +14,21 @@
             height: 100vh;
             flex-direction: column;
         }
-        
-        #loginsubmit{
+
+        #loginsubmit {
             border: 2px solid black;
             padding: 20px;
         }
-        .inputdiv{
+
+        .inputdiv {
             margin: 10px;
         }
 
-        .inputdiv input{
+        .inputdiv input,
+        .inputdiv select {
             width: 96%;
             font-size: 20px;
+            margin: 10px 0px;
         }
     </style>
 </head>
@@ -33,43 +36,59 @@
 <body>
     <div class="loginform">
         <div id="warning" style="color: red;"></div>
-        <form action="/user/login" id="loginsubmit" method="post">
+        <form action="/user/adddata" id="loginsubmit" method="post">
+            <h2 style="text-align: center;">Fill your details</h2>
             <div class="inputdiv">
-                <label for="applicationNo">Application No: </label>
-                <input id="applicationNo" type="applicationNo" name="applicationNo">
+                <label for="name">Name: </label>
+                <input id="text" type="name" name="name" required>
             </div>
             <div class="inputdiv">
-                <label for="password">Password: </label>
-                <input type="password" id="password" name="password">
+                <label for="stream">Stream</label>
+                <select name="stream" id="stream" required>
+                    <option value="">--select--</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="MEA">MEA</option>
+                    <option value="Math">Math</option>
+                </select>
+            </div>
+            <div class="inputdiv">
+                <label for="program">Program</label>
+                <select name="program" id="program" required>
+                    <option value="">--select--</option>
+                    <option value="MTech">MTech</option>
+                    <option value="Phd">Phd</option>
+                </select>
             </div>
             <div class="inputdiv" style="text-align: center;">
-            <input type="submit" value="Login">
+                <input type="submit" value="Next">
             </div>
         </form>
     </div>
     <script>
         if (localStorage.getItem('token')) {
             window.location.href = '/quiz'
-            
         }
         document.getElementById('loginsubmit').addEventListener('submit', (e) => {
             e.preventDefault();
             fetch(event.target.action, {
                 method: "POST",
+                headers: {
+                    'auth_token': `${localStorage.getItem('token')}`
+                },
                 body: new URLSearchParams(new FormData(event.target)),
             })
                 .then((res) => res.json())
                 .then((body) => {
                     console.log(body);
                     if (body.status === 0) {
-                        localStorage.setItem('token', `${body.authtoken}`)
                         window.location.href = '/quiz'
                     } else {
-                        document.getElementById('warning').innerHTML="Invalid Credentials"
+                        document.getElementById('warning').innerHTML = "Invalid Credentials"
                     }
                 })
                 .catch((error) => {
-                    document.getElementById('warning').innerHTML="Invalid Credentials"
+                    document.getElementById('warning').innerHTML = "Invalid Credentials"
                 });
         })
     </script>

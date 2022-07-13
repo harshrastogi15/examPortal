@@ -1,8 +1,13 @@
 const express = require('express');
+const CSE = require('../model/CSE');
+const ECE = require('../model/ECE');
+const Math = require('../model/Math');
+const MEA = require('../model/MEA');
 const question = require('../model/question');
 const router = express.Router();
 
 router.post('/addquestion', (req, res) => {
+    var stream = req.body.stream;
     var arr = new Array();
     arr.push(req.body.option1);
     arr.push(req.body.option2);
@@ -10,38 +15,84 @@ router.post('/addquestion', (req, res) => {
     arr.push(req.body.option4);
     var answer = req.body[req.body.answer];
     try {
-        question.create({
-            name: req.body.name,
-            ques: req.body.ques,
-            choice: arr,
-            answer: answer
-        })
-            .then(() => {
-                res.send('success');
+        if (stream === 'CSE') {
+            CSE.create({
+                name: req.body.name,
+                ques: req.body.ques,
+                choice: arr,
+                answer: answer
             })
-            .catch(() => {
-                res.send('Error');
+                .then(() => {
+                    res.json({ status: 0 });
+                })
+                .catch(() => {
+                    res.json({ status: -1 });
+                })
+        }
+        else if (stream === 'MEA') {
+            MEA.create({
+                name: req.body.name,
+                ques: req.body.ques,
+                choice: arr,
+                answer: answer
             })
+                .then(() => {
+                    res.json({ status: 0 });
+                })
+                .catch(() => {
+                    res.json({ status: -1 });
+                })
+        }
+        else if (stream === 'ECE') {
+            ECE.create({
+                name: req.body.name,
+                ques: req.body.ques,
+                choice: arr,
+                answer: answer
+            })
+                .then(() => {
+                    res.json({ status: 0 });
+                })
+                .catch(() => {
+                    res.json({ status: -1 });
+                })
+        }
+        else if (stream === 'Math') {
+            Math.create({
+                name: req.body.name,
+                ques: req.body.ques,
+                choice: arr,
+                answer: answer
+            })
+                .then(() => {
+                    res.json({ status: 0 });
+                })
+                .catch(() => {
+                    res.json({ status: -1 });
+                })
+        } else {
+            res.json({ status: -1 });
+        }
     } catch (err) {
-        res.send('Server Error');
+        res.json({ status: -1 });
     }
 })
 
 
-router.get('/sendquestion',async(req,res)=>{
+router.get('/sendquestion', async (req, res) => {
     try {
         var ques = await question.find({});
         var data = new Array();
-        for(i in ques){
+        for (i in ques) {
             data.push({
-                question : ques[i].ques,
-                choice : ques[i].choice,
-                id : ques[i]._id                
+                question: ques[i].ques,
+                choice: ques[i].choice,
+                id: ques[i]._id
             })
         }
-        res.json({status:0,data})
+        res.json({ status: 0, data })
     } catch (error) {
-        res.json({status:-1})
+        res.json({ status: -1 })
     }
 })
 

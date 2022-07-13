@@ -17,6 +17,9 @@ function fetchUser() {
         .then((body) => {
             console.log(body);
             if (body.status === 0) {
+                if(body.data.stream.length===0){
+                    window.location.href = '/data'
+                }
                 console.log(body.data)
             } else {
                 localStorage.removeItem('token')
