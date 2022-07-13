@@ -1,7 +1,9 @@
+
 var tempanswer = "";
 
 function logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('Useranswer')
     window.location.href = '/'
 }
 
@@ -50,12 +52,12 @@ if (localStorage.getItem('token')) {
 
 const getquestion = (stream) => {
     fetch(`/question/sendquestion`, {
-        method:'POST',
-        headers:{
+        method: 'POST',
+        headers: {
             'content-type': 'application/json'
         },
         body: JSON.stringify({
-           'stream':`${stream}`
+            'stream': `${stream}`
         })
     })
         .then((res) => res.json())
@@ -72,9 +74,9 @@ const displayquestion = (data) => {
     // console.log(data);
     var html = ``;
     var htQuestion = ``;
-    for (var i=0 ;i<data.length;i++) {
+    for (var i = 0; i < data.length; i++) {
         var idxnew = (Number)(i) + 1;
-        htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i+1}</div>`
+        htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i + 1}</div>`
         html += `
         <div class="mcq" id="${i}">
                 <h3>${idxnew}</h3>
@@ -105,16 +107,30 @@ const displayquestion = (data) => {
         }
 
         html += `</div>`
-        if(Number(i) === data.length - 1){
+        if (Number(i) === data.length - 1) {
             // console.log(i);
             html += `<div class="submitbutton">
-                    <button type="submit" onclick="sendanswer(${data[i].id})"> Submit </button>
+                    <button type="submit" onclick="submitAnswer()"> Submit </button>
                 </div>`
         }
         html += `</div>`
     }
     document.getElementById('quizdisplay').innerHTML = html;
     document.getElementById('questionshow').innerHTML = htQuestion;
+
+    if (localStorage.getItem('Useranswer')) {
+        // console.log(`here`);
+        var value = localStorage.getItem('Useranswer');
+        value = JSON.parse(value);
+        // console.log(value)
+        // mp = value;
+        for (const key in value) {
+            // console.log(key)
+            // console.log(value[key])
+            setAnswer(key, value[key].i, value[key].answer)
+        }
+    }
+
     previous(0, data.length);
 }
 
@@ -145,15 +161,60 @@ var mp = new Map();
 
 function setAnswer(id, i, answer) {
     tempanswer = answer;
-    mp[id]={
-        answer:answer,
-        i:i
+    // console.log(i)
+    // console.log(answer)
+    if (answer === undefined) {
+        return;
     }
+    if (localStorage.getItem('Useranswer')) {
+        // console.log(`here`);
+        var value = localStorage.getItem('Useranswer');
+        value = JSON.parse(value);
+        // console.log(value)
+        mp = value;
+    }
+    mp[id] = {
+        answer: answer,
+        i: i
+    }
+    var store = JSON.stringify(mp);
+    localStorage.setItem('Useranswer', store);
     for (let index = 0; index < 4; index++) {
         var value = document.getElementById(`${id}_option${index}`);
         value.style.background = 'white';
     }
     var value = document.getElementById(`${id}_option${i}`);
     value.style.background = 'rgb(144, 188, 133)';
-    console.log(mp);
+    // console.log(mp);
+}
+
+
+const submitAnswer = () => {
+    // console.log(mp);
+    const arr = new Array();
+    for (const key in mp) {
+        // console.log(key)
+        arr.push({
+            key:key,
+            option:mp[key].i,
+            value:mp[key].answer
+        })
+        // console.log(value[key])
+    }
+    // console.log(arr);
+    fetch('/user/uploadAnswer', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'auth_token': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            answer: arr
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res);
+        })
+        .catch()
 }
