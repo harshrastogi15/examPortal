@@ -1,14 +1,12 @@
-.timer{
-    height: 60px;
-    text-align: center;
-}
 
 .main{
     display: flex;
+    margin: auto;
+    width: 95%;
 }
 
 .quiz{
-    width: 60%;
+    width: 70%;
 }
 
 .mcq{
@@ -16,10 +14,11 @@
     margin: auto;
 }
 
-.mcq h3{
+.mcq h1 span{
     font-size: 24px;
     padding: 0;
     margin: 0;
+    font-weight: 700;
 }
 
 .mcq h1{
@@ -34,14 +33,14 @@
     margin: 0;
     padding: 0;
     padding-top: 20px;
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 .mcq ul li{
     font-size: 22px;
     margin: 0;
     padding: 0;
-    padding:10px 5px;
+    padding:10px 15px;
     cursor: pointer;
 }
 
@@ -81,4 +80,69 @@
     background: rgba(0,0,0,0.5);
     z-index: 999;
     display: none;
+    border-left: 3px solid black;
+    min-height: 60vh;
+}
+
+.questionShow{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.questionShow .short{
+    background-color: gray;
+    padding: 6px;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.questionShow .short:hover{
+    background-color:black;
+    color: white;
+}
+
+/* Header */
+
+.header{
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 50px;
+    width: 95%;
+    padding-bottom: 3px;
+    border-bottom: 3px solid black;
+}
+
+.detail h1{
+    margin: 0;
+    padding: 0;
+    font-size: 27px;
+}
+
+.otherdetail{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.otherdetail h4{
+    margin: 0;
+    padding: 0;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.timer{
+    width: 30%;
+    text-align: center;
 }

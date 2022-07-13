@@ -10,10 +10,13 @@
 </head>
 
 <body>
-    <div>
-    </div>
-    <div class="timer">
-        Timer
+    <div class="header">
+        <div class="detail" id="Detail">
+        </div>
+        <div class="timer">
+            Time
+            <%- include ('./timer.ejs') %> 
+        </div>
     </div>
     <div class="overlay" id="instruction">
         <div class="overlay-content">
@@ -29,26 +32,12 @@
     </div>
     <div class="main">
         <div class="quiz" id="quizdisplay">
-            <!-- <div class="mcq">
-                <h3>1</h3>
-                <h1>question</h1>
-                <ul>
-                    <li id="option1" onclick="setAnswer(1,'Princes')"><span> A </span> Princes</li>
-                    <li id="option2" onclick="setAnswer(2,'king')"><span> B </span> king</li>
-                    <li id="option3" onclick="setAnswer(3,'lion')"><span> C </span> lion</li>
-                    <li id="option4" onclick="setAnswer(4,'tiger')"><span> D </span> tiger</li>
-                </ul>
-                <div class="answer"></div>
-                <div class="submitbutton">
-                    <button type="submit"> Submit </button>
-                </div>
-                <div class="differentquestion">
-                    <button type="submit"> Previous </button>
-                    <button type="submit"> Next </button>
-                </div>
-            </div> -->
+            
         </div>
         <div class="question">
+            <div class="questionShow" id="questionshow">
+                
+            </div>
             <div>
                 <button type="button" onclick="logout()">Finish</button>
             </div>

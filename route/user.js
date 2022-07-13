@@ -97,4 +97,22 @@ router.post('/adddata', jwtaccess, async (req, res) => {
     }
 })
 
+
+router.post('/uploadAnswer',jwtaccess,async(req,res)=>{
+    try {
+        // console.log(req.body.answer)
+        var user = await User.findByIdAndUpdate(req.userid,{
+            attempted:true,
+            answer:req.body.answer
+        });
+        if (!user) {
+            return res.status(400).json({ status: -1 });
+        }
+        res.json({ status: 0 });
+    } catch (error) {
+        res.json({status:-1})
+    }
+})
+
+
 module.exports = router;

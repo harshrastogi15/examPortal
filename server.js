@@ -14,6 +14,7 @@ app.use(express.static(__dirname + '/'));
 
 app.use('/question',require('./route/question'));
 app.use('/user',require('./route/user'));
+app.use('/time',require('./route/timing'));
 
 app.get('/quiz',(req,res)=>{
     res.render('quiz');
