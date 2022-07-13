@@ -62,8 +62,10 @@ const getquestion = (stream) => {
 const displayquestion = (data) => {
     // console.log(data);
     var html = ``;
-    for (i in data) {
+    var htQuestion = ``;
+    for (var i=0 ;i<data.length;i++) {
         var idxnew = (Number)(i) + 1;
+        htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i+1}</div>`
         html += `
         <div class="mcq" id="${i}">
                 <h3>${idxnew}</h3>
@@ -77,9 +79,6 @@ const displayquestion = (data) => {
         }
         html += `</ul>
                 <div class="answer"></div>
-                <div class="submitbutton">
-                    <button type="submit" onclick="sendanswer(${data[i].id})"> Submit </button>
-                </div>
                 <div class="differentquestion">`
 
         if (i > 0) {
@@ -89,15 +88,24 @@ const displayquestion = (data) => {
             html += `<button type="submit" disabled> Previous </button>`
         }
 
-        if (i < data.length - 1) {
+        if (Number(i) < data.length - 1) {
             var idx = (Number)(i) + 1;
             html += `<button type="submit" onclick="next(${idx},${data.length})" > Next </button>`
         } else {
             html += `<button type="submit" disabled> Next </button>`
         }
-        html += `</div></div>`
+
+        html += `</div>`
+        if(Number(i) === data.length - 1){
+            console.log(i);
+            html += `<div class="submitbutton">
+                    <button type="submit" onclick="sendanswer(${data[i].id})"> Submit </button>
+                </div>`
+        }
+        html += `</div>`
     }
     document.getElementById('quizdisplay').innerHTML = html;
+    document.getElementById('questionshow').innerHTML = htQuestion;
     previous(0, data.length);
 }
 
@@ -127,7 +135,6 @@ function previous(i, sz) {
 
 function next(i, sz) {
     tempanswer = "";
-    console.log(i);
     for (let index = 0; index < sz; index++) {
         var value = document.getElementById(`${index}`);
         value.style.display = 'none'

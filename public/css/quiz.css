@@ -71,3 +71,29 @@
 .question{
     width: 30%;
 }
+
+.questionShow{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.questionShow .short{
+    background-color: gray;
+    padding: 6px;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.questionShow .short:hover{
+    background-color:black;
+    color: white;
+}
