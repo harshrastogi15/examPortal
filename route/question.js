@@ -28,4 +28,21 @@ router.post('/addquestion', (req, res) => {
 })
 
 
+router.get('/sendquestion',async(req,res)=>{
+    try {
+        var ques = await question.find({});
+        var data = new Array();
+        for(i in ques){
+            data.push({
+                question : ques[i].ques,
+                choice : ques[i].choice,
+                id : ques[i]._id                
+            })
+        }
+        res.json({status:0,data})
+    } catch (error) {
+        res.json({status:-1})
+    }
+})
+
 module.exports = router

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const connect = require('./db')
-const port = 2000 | process.env.PORT; 
+const port = process.env.CUS_PORT | process.env.port; 
 require('dotenv').config();
 const app = express();
 connect();
@@ -24,5 +24,5 @@ app.get('/quiz',(req,res)=>{
 })
 
 app.listen(port,()=>{
-    console.log('server start');
+    console.log('server start at '+port);
 })
