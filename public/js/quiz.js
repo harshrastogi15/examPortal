@@ -50,6 +50,13 @@ if (localStorage.getItem('token')) {
 }
 
 const getquiz = (stream) => {
+    
+    var now = new Date();
+    if(now<startDate && window.location.pathname !== '/instruction'){
+        // console.log('noew');
+        window.location.href = '/instruction'
+      }
+
     fetch(`/question/sendquestion`, {
         method: 'POST',
         headers: {
@@ -61,7 +68,7 @@ const getquiz = (stream) => {
     })
         .then((res) => res.json())
         .then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.status === 0) {
                 displayquestion(res.data);
             }
@@ -89,7 +96,7 @@ const displayquestion = (data) => {
                 <ul>`
 
         if (data[i].image.contentType) {
-            console.log('image');
+            // console.log('image');
             var img = arrayBufferToBase64(data[i]['image'].data.data);
             var imgSrc = `data:image/${data[i].image.contentType};base64,${img.toString('base64')}`;
             html += `<img src='${imgSrc}' alt='server error'/>`

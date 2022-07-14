@@ -22,7 +22,7 @@ router.post("/addquestion", upload.single('img'), (req, res) => {
     choice: arr,
     answer: answer,
   }
-  if (req.file!==undefined) {
+  if (req.file !== undefined) {
     data['img'] = {
       data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
       contentType: 'image/png'
@@ -190,71 +190,45 @@ router.post("/sendquestion", async (req, res) => {
     if (stream === "CSE") {
       var ques = await CSE.find({});
       for (i in ques) {
-        // if (ques[i].type === "txt") {
         data.push({
           question: ques[i].ques,
           choice: ques[i].choice,
           id: ques[i]._id,
-          image : ques[i].img
+          image: ques[i].img
         });
-        // } else if (ques[i].type === "img") {
-        //   data.push({
-        //     question: ques[i].quesImg,
-        //     choice: ques[i].choiceImg,
-        //     id: ques[i]._id,
-        //   });
-        // }
+
       }
     } else if (stream === "MEA") {
       var ques = await MEA.find({});
       for (i in ques) {
-        // if (ques[i].type === "txt") {
         data.push({
           question: ques[i].ques,
           choice: ques[i].choice,
           id: ques[i]._id,
+          image: ques[i].img
         });
-        // } else if (ques[i].type === "img") {
-        //   data.push({
-        //     question: ques[i].quesImg,
-        //     choice: ques[i].choiceImg,
-        //     id: ques[i]._id,
-        //   });
-        // }
+        
       }
     } else if (stream === "ECE") {
       var ques = await ECE.find({});
       for (i in ques) {
-        // if (ques[i].type === "txt") {
         data.push({
           question: ques[i].ques,
           choice: ques[i].choice,
           id: ques[i]._id,
+          image: ques[i].img
         });
-        // } else if (ques[i].type === "img") {
-        //   data.push({
-        //     question: ques[i].quesImg,
-        //     choice: ques[i].choiceImg,
-        //     id: ques[i]._id,
-        //   });
-        // }
       }
     } else if (stream === "Math") {
       var ques = await Math.find({});
       for (i in ques) {
-        if (ques[i].type === "txt") {
-          data.push({
-            question: ques[i].ques,
-            choice: ques[i].choice,
-            id: ques[i]._id,
-          });
-        } else if (ques[i].type === "img") {
-          data.push({
-            question: ques[i].quesImg,
-            choice: ques[i].choice,
-            id: ques[i]._id,
-          });
-        }
+        data.push({
+          question: ques[i].ques,
+          choice: ques[i].choice,
+          id: ques[i]._id,
+          image: ques[i].img
+        });
+
       }
     }
 

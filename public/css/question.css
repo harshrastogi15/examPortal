@@ -1,11 +1,81 @@
 .QuestionForm{
-    width: 50%;
+    width: 97%;
+    margin: auto;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+}
+
+.formfill{
+    width: 40%;
 }
 
 #question_txt{
+    /* width: 40%; */
     display: flex;
     flex-direction: column;
 }
 
+#question_txt input, #question_txt select{
+    padding: 3px;
+    margin:5px 10px 5px;
+}
+
+#question_txt label{
+    padding: 0px;
+    margin:0px 10px;
+}
+
+/* display */
+
+.display{
+    width: 55%;
+    border-left: 2px solid black;
+}
+
+.question{
+    margin: auto;
+    width: fit-content;
+}
+
+.quiz{
+    width: 95%;
+}
+
+.mcq{
+    width: 80%;
+    margin: auto;
+}
+
+.mcq h1 span{
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    font-weight: 700;
+}
+
+.mcq h1{
+    padding: 0;
+    margin: 0;
+    font-size: 26px;
+    font-weight: normal;
+}
+
+.mcq img{
+    width: 100%;
+}
+
+.mcq ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 20px;
+    padding-left: 5px;
+}
+
+.mcq ul li{
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+    padding:10px 15px;
+    cursor: pointer;
+}

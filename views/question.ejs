@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../public/css/question.css">
     <title>Question Upload</title>
-
-    <script src="../public/js/question.js"></script>
 </head>
 
 <body>
@@ -18,12 +16,7 @@
         </div>
     </div>
     <div class="QuestionForm">
-        <!-- <select name="question_type" id="question_type">
-            <option value="" selected disabled>Select Question Type</option>
-            <option value="1">Image Type Question</option>
-            <option value="2">Text Type Question</option>
-        </select> -->
-        <div>
+        <div class="formfill">
             <form action="/question/addquestion" id="question_txt" method="post" encType='multipart/form-data'>
                 <label for="stream">Stream</label>
                 <select name="stream" id="stream" required>
@@ -57,15 +50,23 @@
                 <input type="submit" value="Add Question" id="add_question">
             </form>
         </div>
-        <!-- <form action="/addimagequestion" id="question_img" method="post" enctype="multipart/form-data">
-            <input type="text" name="stream" id="stream" placeholder="Stream">
-            <input type="file" name="ques" id="image">
-            <input type="text" name="opt1" placeholder="Enter Option 1" id="option1">
-            <input type="text" name="opt2" placeholder="Enter Option 2" id="option2">
-            <input type="text" name="opt3" placeholder="Enter Option 3" id="option3">
-            <input type="text" name="opt4" placeholder="Enter Option 4" id="option4">
-            <input type="text" name="answer" placeholder="Enter Answer" id="answer">
-            <input type="submit" value="Add Question" id="add_question">
-        </form> -->
+        <div class="display">
+            <div class="question">
+                <label for="stream">Stream</label>
+                <select name="stream" id="stream" onchange="selectStream(this.value)" required>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="MEA">MEA</option>
+                    <option value="Math">Math</option>
+                </select>
+                <div class="questionShow" id="questionshow">
+                    
+                </div>
+            </div>
+            <div class="quiz" id="quizdisplay">
+            
+            </div>
+        </div>
     </div>
+    <script src="../public/js/question.js"></script>
 </body>

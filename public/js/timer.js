@@ -1,16 +1,19 @@
 var timer;
+var checkvalue = false;
 
 
 
-
-var compareDate = new Date('July 16, 2022, 21:30:00');
+var compareDate = new Date('July 16, 2022, 12:30:00');
+var startDate = new Date('July 16, 2022, 11:00:00');
 // compareDate.setDate(compareDate.getDate() + 1); //just for this demo today + 7 days
 
 const getDate =()=>{
     fetch('/time/timing')
     .then((res)=>res.json())
     .then((res)=>{
-        compareDate = new Date(res.date);
+      // console.log(res.SDate);
+        compareDate = new Date(res.EDate);
+        startDate = new Date(res.SDate);
     })
     .catch()
 }
@@ -24,6 +27,14 @@ timer = setInterval(function() {
 function timeBetweenDates(toDate) {
   var dateEntered = toDate;
   var now = new Date();
+  // console.log(window.location.pathname);
+  // if(now<startDate && window.location.pathname !== '/instruction'){
+  //   // console.log('noew');
+  //   window.location.href = '/instruction'
+  // }
+
+  checkvalue = true;
+
   if(now > dateEntered){
     submitAnswer();
   }

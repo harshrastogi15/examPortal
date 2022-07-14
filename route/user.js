@@ -15,18 +15,18 @@ router.post(
             if (user) {
                 return res.status(400).json({ status: 1 });
             }
-            bcrypt.hash(req.body.password, 10, async function (err, hash) {
-                var arr = new Array();
-                user = await User.create({
-                    applicationNo: req.body.applicationNo,
-                    password: hash,
-                    answer : arr
+            // bcrypt.hash(req.body.password, 10, async function (err, hash) {
+            var arr = new Array();
+            user = await User.create({
+                applicationNo: req.body.applicationNo,
+                password: req.body.password,
+                answer: arr
+            })
+                .then((user) => {
+                    res.status(200).json({ status: 0 })
                 })
-                    .then((user) => {
-                        res.status(200).json({ status: 0 })
-                    })
-                    .catch((error) => res.status(400).json({ status: -1 }));
-            });
+                .catch((error) => res.status(400).json({ status: -1 }));
+            // });
         } catch (error) {
             res.status(500).json({ status: -2 });
         }
@@ -45,8 +45,8 @@ router.post(
             if (!user) {
                 return res.json({ status: -1 })
             }
-            const match = await bcrypt.compare(password, user.password);
-            if (match) {
+            // const match = await bcrypt.compare(password, user.password);
+            if (password == user.password) {
                 data = {
                     id: user._id
                 }
@@ -57,7 +57,7 @@ router.post(
             }
 
         } catch (error) {
-            res.status(500).json({ status: -2 ,error});
+            res.status(500).json({ status: -2, error });
         }
     }
 );
@@ -70,9 +70,9 @@ router.post('/access', jwtaccess, async (req, res) => {
         }
         var data = {
             name: user.name,
-            stream : user.stream,
-            applicationNo : user.applicationNo,
-            program : user.program
+            stream: user.stream,
+            applicationNo: user.applicationNo,
+            program: user.program
         }
         res.json({ status: 0, data });
     } catch (error) {
@@ -83,10 +83,10 @@ router.post('/access', jwtaccess, async (req, res) => {
 
 router.post('/adddata', jwtaccess, async (req, res) => {
     try {
-        var user = await User.findByIdAndUpdate(req.userid,{
-            name:req.body.name,
-            stream:req.body.stream,
-            program:req.body.program
+        var user = await User.findByIdAndUpdate(req.userid, {
+            name: req.body.name,
+            stream: req.body.stream,
+            program: req.body.program
         });
         if (!user) {
             return res.status(400).json({ status: -1 });
@@ -98,19 +98,19 @@ router.post('/adddata', jwtaccess, async (req, res) => {
 })
 
 
-router.post('/uploadAnswer',jwtaccess,async(req,res)=>{
+router.post('/uploadAnswer', jwtaccess, async (req, res) => {
     try {
         // console.log(req.body.answer)
-        var user = await User.findByIdAndUpdate(req.userid,{
-            attempted:true,
-            answer:req.body.answer
+        var user = await User.findByIdAndUpdate(req.userid, {
+            attempted: true,
+            answer: req.body.answer
         });
         if (!user) {
             return res.status(400).json({ status: -1 });
         }
         res.json({ status: 0 });
     } catch (error) {
-        res.json({status:-1})
+        res.json({ status: -1 })
     }
 })
 

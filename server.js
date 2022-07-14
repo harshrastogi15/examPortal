@@ -28,6 +28,10 @@ app.get('/addquiz',(req,res)=>{
     res.render('question.ejs');
 })
 
+app.get('/instruction',(req,res)=>{
+    res.render('instruction');
+})
+
 app.get('/',(req,res)=>{
     res.render('index');
 })
