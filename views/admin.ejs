@@ -5,45 +5,79 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/css/admin.css">
-    <title>QUIZ</title>
+    <title>Login</title>
+    <style>
+        .loginform {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        #loginsubmit{
+            border: 2px solid black;
+            padding: 20px;
+        }
+        .inputdiv{
+            margin: 10px;
+        }
+
+        .inputdiv input{
+            width: 96%;
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="header">
-        <div class="detail" id="Detail">
-        </div>
-        <div class="timer">
-            Time
-            <%- include ('./timer.ejs') %> 
-        </div>
-    </div>
-    <div class="overlay" id="instruction">
-        <div class="overlay-content">
-            <div class="instruction-content">
-                <h1>Instruction</h1>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, quidem.
-                </p>
-                <button class="btn" id="start">Start</button>
+    <div class="loginform">
+        <div id="warning" style="color: red;"></div>
+        <form action="/admin/adminlogin" id="loginsubmit" method="post">
+            <h3 style="text-align: center;">Admin Login</h3>
+            <div class="inputdiv">
+                <label for="applicationNo">Admin Id: </label>
+                <input id="applicationNo" type="applicationNo" name="applicationNo">
             </div>
-        </div>
+            <div class="inputdiv">
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="inputdiv" style="text-align: center;">
+            <input type="submit" value="Login">
+            </div>
+        </form>
     </div>
-    <div class="main">
-        <div class="quiz" id="quizdisplay">
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = '/quiz'
             
-        </div>
-        <div class="question">
-            <div class="questionShow" id="questionshow">
-                
-            </div>
-            <div>
-                <button type="button" onclick="logout()">Finish</button>
-            </div>
-        </div>
-    </div>
-    <script src="../public/js/quiz.js"></script>
+        }
+        document.getElementById('loginsubmit').addEventListener('submit', (e) => {
+            // console.log()
+            e.preventDefault();
+            fetch(event.target.action, {
+                method: "POST",
+                body: new URLSearchParams(new FormData(event.target)),
+            })
+                .then((res) => res.json())
+                .then((body) => {
+                    // console.log(body);
+                    if (body.status === 0) {
+                        localStorage.setItem('admintoken', `${body.authtoken}`)
+                        window.location.href = '/addquiz'
+                    }else if (body.status === 2){
+                        document.getElementById('warning').innerHTML="Already submitted"
+                    } 
+                    else {
+                        document.getElementById('warning').innerHTML="Invalid Credentials"
+                    }
+                })
+                .catch((error) => {
+                    document.getElementById('warning').innerHTML="Invalid Credentials"
+                });
+        })
+    </script>
 </body>
 
 </html>

@@ -8,8 +8,18 @@ const path = require("path");
 const fs = require("fs");
 const upload = require("../middleware/imgUpd");
 const router = express.Router();
+var jwt = require('jsonwebtoken');
+require('dotenv').config();
+const jwtaccess = require("../middleware/jwtverification");
 
-router.post("/addquestion", upload.single('img'), (req, res) => {
+
+router.post("/addquestion",jwtaccess, upload.single('img'), (req, res) => {
+  const id = req.userid;
+  // console.log(id);
+  if(id !== process.env.ADMINNO){
+    // console.log(id);
+    return res.json({status:-1});
+  }
   var stream = req.body.stream;
   var arr = new Array();
   arr.push(req.body.option1);

@@ -66,6 +66,10 @@
         </form>
     </div>
     <script>
+        if (localStorage.getItem('token')) {
+        } else {
+            window.location.href = '/'
+        }
         document.getElementById('loginsubmit').addEventListener('submit', (e) => {
             e.preventDefault();
             fetch(event.target.action, {

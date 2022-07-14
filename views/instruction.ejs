@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +8,12 @@
     <title>Instruction</title>
     <link rel="stylesheet" href="../public/css/instruction.css">
 </head>
+
 <body>
     <div class="inst">
         <div class="timer" style="text-align: center;">
             Time
-            <%- include ('./timer.ejs') %> 
+            <%- include ('./timer.ejs') %>
         </div>
         <h1>Instruction</h1>
         <ul>
@@ -25,6 +27,12 @@
             <button type="button">Next</button>
         </a>
     </div>
-
+    <script>
+        if (localStorage.getItem('token')) {
+        } else {
+            window.location.href = '/'
+        }
+    </script>
 </body>
+
 </html>
