@@ -49,7 +49,7 @@
     </div>
     <script>
         if (localStorage.getItem('token')) {
-            window.location.href = '/quiz'
+            window.location.href = '/data'
             
         }
         document.getElementById('loginsubmit').addEventListener('submit', (e) => {
@@ -63,7 +63,7 @@
                     // console.log(body);
                     if (body.status === 0) {
                         localStorage.setItem('token', `${body.authtoken}`)
-                        window.location.href = '/quiz'
+                        window.location.href = '/data'
                     }else if (body.status === 2){
                         document.getElementById('warning').innerHTML="Already submitted"
                     } 

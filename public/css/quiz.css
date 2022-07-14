@@ -28,6 +28,13 @@
     font-weight: normal;
 }
 
+.mcq h3{
+    border-top: 2px solid black;
+    margin-top: 3px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
 .mcq img{
     width: 100%;
 }
