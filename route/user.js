@@ -72,7 +72,8 @@ router.post('/access', jwtaccess, async (req, res) => {
             name: user.name,
             stream: user.stream,
             applicationNo: user.applicationNo,
-            program: user.program
+            program: user.program,
+            answer:user.answer
         }
         res.json({ status: 0, data });
     } catch (error) {

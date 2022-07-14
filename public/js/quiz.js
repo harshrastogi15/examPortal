@@ -1,4 +1,6 @@
 var tempanswer = "";
+var mp = new Map();
+var arr = new Array();
 
 function logout() {
     localStorage.removeItem('token')
@@ -30,6 +32,8 @@ function fetchUser() {
                         <h4>Program : ${body.data.program}</h4>
                     </div>  
                 `;
+                arr = body.data.answer;
+                // console.log(arr);
                 document.getElementById('Detail').innerHTML = html
                 getquiz(body.data.stream);
             } else {
@@ -50,12 +54,12 @@ if (localStorage.getItem('token')) {
 }
 
 const getquiz = (stream) => {
-    
+
     var now = new Date();
-    if(now<startDate && window.location.pathname !== '/instruction'){
+    if (now < startDate && window.location.pathname !== '/instruction') {
         // console.log('noew');
         window.location.href = '/instruction'
-      }
+    }
 
     fetch(`/question/sendquestion`, {
         method: 'POST',
@@ -137,17 +141,22 @@ const displayquestion = (data) => {
     document.getElementById('quizdisplay').innerHTML = html;
     document.getElementById('questionshow').innerHTML = htQuestion;
 
-    if (localStorage.getItem('Useranswer')) {
-        // console.log(`here`);
-        var value = localStorage.getItem('Useranswer');
-        value = JSON.parse(value);
-        // console.log(value)
-        // mp = value;
-        for (const key in value) {
-            // console.log(key)
-            // console.log(value[key])
-            setAnswer(key, value[key].i, value[key].answer)
-        }
+    // if (localStorage.getItem('Useranswer')) {
+    //     // console.log(`here`);
+    //     var value = localStorage.getItem('Useranswer');
+    //     value = JSON.parse(value);
+    //     // console.log(value)
+    //     // mp = value;
+    //     for (const key in value) {
+    //         // console.log(key)
+    //         // console.log(value[key])
+    //         setAnswer(key, value[key].i, value[key].answer)
+    //     }
+    // }
+    // console.log(arr);
+    for (var i in arr) {
+        // console.log(i);
+        setAnswer(arr[i].key, arr[i].option, arr[i].value)
     }
 
     previous(0, data.length);
@@ -175,7 +184,6 @@ function next(i, sz) {
 
 
 // answer updation
-var mp = new Map();
 
 
 function setAnswer(id, i, answer) {
@@ -185,26 +193,57 @@ function setAnswer(id, i, answer) {
     if (answer === undefined) {
         return;
     }
-    if (localStorage.getItem('Useranswer')) {
-        // console.log(`here`);
-        var value = localStorage.getItem('Useranswer');
-        value = JSON.parse(value);
-        // console.log(value)
-        mp = value;
-    }
+    // if (localStorage.getItem('Useranswer')) {
+    //     // console.log(`here`);
+    //     var value = localStorage.getItem('Useranswer');
+    //     value = JSON.parse(value);
+    //     // console.log(value)
+    //     mp = value;
+    // }
     mp[id] = {
         answer: answer,
         i: i
     }
-    var store = JSON.stringify(mp);
-    localStorage.setItem('Useranswer', store);
+    // var store = JSON.stringify(mp);
+    // localStorage.setItem('Useranswer', store);
     for (let index = 0; index < 4; index++) {
         var value = document.getElementById(`${id}_option${index}`);
         value.style.background = 'white';
     }
     var value = document.getElementById(`${id}_option${i}`);
     value.style.background = 'rgb(144, 188, 133)';
+    middleAnswer();
     // console.log(mp);
+}
+
+const middleAnswer = () => {
+    // console.log(mp);
+    const arr = new Array();
+    for (const key in mp) {
+        // console.log(key)
+        arr.push({
+            key: key,
+            option: mp[key].i,
+            value: mp[key].answer
+        })
+        // console.log(value[key])
+    }
+    // console.log(arr);
+    fetch('/user/uploadAnswer', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'auth_token': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            answer: arr
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            // console.log(res);
+        })
+        .catch()
 }
 
 
@@ -234,6 +273,12 @@ const submitAnswer = () => {
         .then((res) => res.json())
         .then((res) => {
             console.log(res);
+            if(res.status===0){
+                alert('Successfully submitted')
+                logout();
+            }
         })
-        .catch()
+        .catch(()=>{
+            
+        })
 }
