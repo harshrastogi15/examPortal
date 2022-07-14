@@ -27,12 +27,6 @@ timer = setInterval(function() {
 function timeBetweenDates(toDate) {
   var dateEntered = toDate;
   var now = new Date();
-  // console.log(window.location.pathname);
-  // if(now<startDate && window.location.pathname !== '/instruction'){
-  //   // console.log('noew');
-  //   window.location.href = '/instruction'
-  // }
-
   checkvalue = true;
 
   if(now > dateEntered){
