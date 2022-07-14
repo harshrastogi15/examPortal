@@ -30,7 +30,7 @@ function timeBetweenDates(toDate) {
   checkvalue = true;
 
   if(now > dateEntered){
-    submitAnswer();
+    submitAnswer2();
   }
   var difference = dateEntered.getTime() - now.getTime();
 

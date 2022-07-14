@@ -70,6 +70,34 @@
         } else {
             window.location.href = '/'
         }
+
+        function fetchUser() {
+            fetch(`/user/access`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'auth_token': `${localStorage.getItem('token')}`
+                }
+            })
+                .then((res) => res.json())
+                .then((body) => {
+                    // console.log(body);
+                    if (body.status === 0) {
+                        if (body.data.stream.length !== 0) {
+                            window.location.href = '/instruction'
+                        }
+                    } else {
+                        localStorage.removeItem('token')
+                        window.location.href = '/'
+                    }
+                })
+                .catch((error) => {
+                    localStorage.removeItem('token')
+                    window.location.href = '/'
+                });
+        }
+
+        fetchUser();
         document.getElementById('loginsubmit').addEventListener('submit', (e) => {
             e.preventDefault();
             fetch(event.target.action, {
@@ -83,7 +111,7 @@
                 .then((body) => {
                     console.log(body);
                     if (body.status === 0) {
-                        window.location.href = '/quiz'
+                        window.location.href = '/instruction'
                     } else {
                         document.getElementById('warning').innerHTML = "Invalid Credentials"
                     }

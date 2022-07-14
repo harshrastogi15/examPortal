@@ -105,7 +105,7 @@ const displayquestion = (data) => {
             var imgSrc = `data:image/${data[i].image.contentType};base64,${img.toString('base64')}`;
             html += `<img src='${imgSrc}' alt='server error'/>`
         }
-
+        html += `<h3>Choose option below</h3>`;
         for (j in data[i].choice) {
             // console.log(i);
             var idxoption = (Number)(j) + 1;
@@ -132,8 +132,8 @@ const displayquestion = (data) => {
         html += `</div>`
         if (Number(i) === data.length - 1) {
             // console.log(i);
-            html += `<div class="submitbutton">
-                    <button type="submit" onclick="submitAnswer()"> Submit </button>
+            html += `<div class="submitbutton" id="submitbuttonID">
+                    <button type="submit" onclick="submitAnswercreate()"> Submit </button>
                 </div>`
         }
         html += `</div>`
@@ -247,11 +247,26 @@ const middleAnswer = () => {
 }
 
 
+const submitAnswercreate = () => {
+    let data = document.getElementById('submitbuttonID');
+    var newhtml = `
+        You want to submit. Are you sure?
+        <select name="program" id="submitprogram" required>
+            <option value="NO">NO</option>
+            <option value="YES">YES</option>
+        </select>
+        <div>
+            <button type="submit" onclick="submitAnswer()"> Submit </button>
+        </div>
+    `
+    data.innerHTML = newhtml;
+}
+
 const submitAnswer = () => {
-    var val = confirm('You want to submit. Are you sure?')
-    // console.log(val);
-    if(val===false){
-        return 
+    value = document.getElementById('submitprogram').value;
+    // console.log(value);
+    if (value === 'NO') {
+        return;
     }
     // return
     // console.log(mp);
@@ -279,12 +294,55 @@ const submitAnswer = () => {
         .then((res) => res.json())
         .then((res) => {
             console.log(res);
-            if(res.status===0){
+            if (res.status === 0) {
                 alert('Successfully submitted')
                 logout();
             }
         })
-        .catch(()=>{
+        .catch(() => {
+
+        })
+}
+
+
+const submitAnswer2 = () => {
+    // var val = confirm('You want to submit. Are you sure?')
+    // console.log(val);
+    // if(val===false){
+    //     return 
+    // }
+    // return
+    // console.log(mp);
+    const arr = new Array();
+    for (const key in mp) {
+        // console.log(key)
+        arr.push({
+            key: key,
+            option: mp[key].i,
+            value: mp[key].answer
+        })
+        // console.log(value[key])
+    }
+    console.log(arr);
+    fetch('/user/uploadAnswer', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'auth_token': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            answer: arr
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res);
+            if (res.status === 0) {
+                alert('Successfully submitted')
+                logout();
+            }
+        })
+        .catch(() => {
 
         })
 }
