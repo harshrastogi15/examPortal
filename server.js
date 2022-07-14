@@ -24,6 +24,10 @@ app.get('/data',(req,res)=>{
     res.render('userdetail');
 })
 
+app.get('/addquiz',(req,res)=>{
+    res.render('question.ejs');
+})
+
 app.get('/',(req,res)=>{
     res.render('index');
 })

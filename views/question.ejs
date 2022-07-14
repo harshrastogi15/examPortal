@@ -17,23 +17,47 @@
             <h1>Question Panel</h1>
         </div>
     </div>
-    <div class="Question Form">
-        <select name="question_type" id="question_type">
+    <div class="QuestionForm">
+        <!-- <select name="question_type" id="question_type">
             <option value="" selected disabled>Select Question Type</option>
             <option value="1">Image Type Question</option>
             <option value="2">Text Type Question</option>
-        </select>
-        <form action="/addquestion" id="question_txt" method="post">
-            <input type="text" name="stream" id="stream" placeholder="Stream">
-            <input type="text" name="ques" placeholder="Enter Question" id="question">
-            <input type="text" name="opt1" placeholder="Enter Option 1" id="option1">
-            <input type="text" name="opt2" placeholder="Enter Option 2" id="option2">
-            <input type="text" name="opt3" placeholder="Enter Option 3" id="option3">
-            <input type="text" name="opt4" placeholder="Enter Option 4" id="option4">
-            <input type="text" name="answer" placeholder="Enter Answer" id="answer">
-            <input type="submit" value="Add Question" id="add_question">
-        </form>
-        <form action="/addimagequestion" id="question_img" method="post" enctype="multipart/form-data">
+        </select> -->
+        <div>
+            <form action="/question/addquestion" id="question_txt" method="post" encType='multipart/form-data'>
+                <label for="stream">Stream</label>
+                <select name="stream" id="stream" required>
+                    <option value="">--select--</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="MEA">MEA</option>
+                    <option value="Math">Math</option>
+                </select>
+                <label for="ques">Question</label>
+                <input type="text" name="ques" placeholder="Enter Question" id="ques">
+                <label for="image">Upload Image</label>
+                <input type="file" name="img" id="image">
+                <label for="option1">A</label>
+                <input type="text" name="option1" placeholder="Enter Option 1" id="option1" required>
+                <label for="option2">B</label>
+                <input type="text" name="option2" placeholder="Enter Option 2" id="option2" required>
+                <label for="option3">C</label>
+                <input type="text" name="option3" placeholder="Enter Option 3" id="option3" required>
+                <label for="option4">D</label>
+                <input type="text" name="option4" placeholder="Enter Option 4" id="option4" required>
+                <!-- <input type="text" name="answer" placeholder="Enter Answer" id="answer"> -->
+                <label for="answer">Answer</label>
+                <select name="answer" id="answer" required>
+                    <option value="">--select--</option>
+                    <option value="option1">A</option>
+                    <option value="option2">B</option>
+                    <option value="option3">C</option>
+                    <option value="option4">D</option>
+                </select>
+                <input type="submit" value="Add Question" id="add_question">
+            </form>
+        </div>
+        <!-- <form action="/addimagequestion" id="question_img" method="post" enctype="multipart/form-data">
             <input type="text" name="stream" id="stream" placeholder="Stream">
             <input type="file" name="ques" id="image">
             <input type="text" name="opt1" placeholder="Enter Option 1" id="option1">
@@ -42,6 +66,6 @@
             <input type="text" name="opt4" placeholder="Enter Option 4" id="option4">
             <input type="text" name="answer" placeholder="Enter Answer" id="answer">
             <input type="submit" value="Add Question" id="add_question">
-        </form>
+        </form> -->
     </div>
 </body>

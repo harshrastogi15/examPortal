@@ -61,13 +61,20 @@ const getquiz = (stream) => {
     })
         .then((res) => res.json())
         .then((res) => {
-            // console.log(res);
+            console.log(res);
             if (res.status === 0) {
                 displayquestion(res.data);
             }
         })
         .catch()
 }
+
+const arrayBufferToBase64 = (buffer) => {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+};
 
 const displayquestion = (data) => {
     // console.log(data);
@@ -80,6 +87,13 @@ const displayquestion = (data) => {
         <div class="mcq" id="${i}">
                 <h1><span>${idxnew}.</span> ${data[i].question}</h1>
                 <ul>`
+
+        if (data[i].image.contentType) {
+            console.log('image');
+            var img = arrayBufferToBase64(data[i]['image'].data.data);
+            var imgSrc = `data:image/${data[i].image.contentType};base64,${img.toString('base64')}`;
+            html += `<img src='${imgSrc}' alt='server error'/>`
+        }
 
         for (j in data[i].choice) {
             // console.log(i);
@@ -193,9 +207,9 @@ const submitAnswer = () => {
     for (const key in mp) {
         // console.log(key)
         arr.push({
-            key:key,
-            option:mp[key].i,
-            value:mp[key].answer
+            key: key,
+            option: mp[key].i,
+            value: mp[key].answer
         })
         // console.log(value[key])
     }

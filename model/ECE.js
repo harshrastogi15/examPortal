@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema(
-    {
-        name: { type: String },
-        ques: { type: String },
-        choice: [{ type: String }],
-        answer: { type: String }
-    }
-)
-
+const schema = new mongoose.Schema({
+    type: { type: String },
+    ques: { type: String },
+    img: {
+        data: Buffer,
+        contentType: String
+    },
+    choice: [{ type: String }],
+    answer: { type: String },
+});
 module.exports = mongoose.model('ece', schema);

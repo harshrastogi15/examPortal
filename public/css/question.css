@@ -1,0 +1,11 @@
+.QuestionForm{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#question_txt{
+    display: flex;
+    flex-direction: column;
+}
+

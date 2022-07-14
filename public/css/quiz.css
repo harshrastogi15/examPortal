@@ -28,6 +28,10 @@
     font-weight: normal;
 }
 
+.mcq img{
+    width: 100%;
+}
+
 .mcq ul{
     list-style: none;
     margin: 0;
@@ -145,4 +149,8 @@
 .timer{
     width: 30%;
     text-align: center;
+}
+
+footer{
+    margin: 80px;
 }
