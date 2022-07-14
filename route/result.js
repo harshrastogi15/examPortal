@@ -14,7 +14,7 @@ router.get('/Generateresult', async (req, res) => {
             var marks = 0;
             if (user[i].stream === 'CSE') {
                 for (var j = 0; j < user[i].answer.length; j++) {
-                    var q = await CSE.find({ _id: user[i].answer[j].key });
+                    var q = await CSE.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
                         marks++;
                     }
@@ -31,14 +31,14 @@ router.get('/Generateresult', async (req, res) => {
                 }
             }else if (user[i].stream === 'MEA') {
                 for (var j = 0; j < user[i].answer.length; j++) {
-                    var q = await MEA.find({ _id: user[i].answer[j].key });
+                    var q = await MEA.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
                         marks++;
                     }
                 }
             }else if (user[i].stream === 'Math') {
                 for (var j = 0; j < user[i].answer.length; j++) {
-                    var q = await Math.find({ _id: user[i].answer[j].key });
+                    var q = await Math.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
                         marks++;
                     }
