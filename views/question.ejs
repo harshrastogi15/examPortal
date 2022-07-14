@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/question.css">
+    <title>Question Upload</title>
+
+    <script src="../public/js/question.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="heading">
+            <h1>Question Panel</h1>
+        </div>
+    </div>
+    <div class="Question Form">
+        <select name="question_type" id="question_type">
+            <option value="" selected disabled>Select Question Type</option>
+            <option value="1">Image Type Question</option>
+            <option value="2">Text Type Question</option>
+        </select>
+        <form action="/addquestion" id="question_txt" method="post">
+            <input type="text" name="stream" id="stream" placeholder="Stream">
+            <input type="text" name="ques" placeholder="Enter Question" id="question">
+            <input type="text" name="opt1" placeholder="Enter Option 1" id="option1">
+            <input type="text" name="opt2" placeholder="Enter Option 2" id="option2">
+            <input type="text" name="opt3" placeholder="Enter Option 3" id="option3">
+            <input type="text" name="opt4" placeholder="Enter Option 4" id="option4">
+            <input type="text" name="answer" placeholder="Enter Answer" id="answer">
+            <input type="submit" value="Add Question" id="add_question">
+        </form>
+        <form action="/addimagequestion" id="question_img" method="post" enctype="multipart/form-data">
+            <input type="text" name="stream" id="stream" placeholder="Stream">
+            <input type="file" name="ques" id="image">
+            <input type="text" name="opt1" placeholder="Enter Option 1" id="option1">
+            <input type="text" name="opt2" placeholder="Enter Option 2" id="option2">
+            <input type="text" name="opt3" placeholder="Enter Option 3" id="option3">
+            <input type="text" name="opt4" placeholder="Enter Option 4" id="option4">
+            <input type="text" name="answer" placeholder="Enter Answer" id="answer">
+            <input type="submit" value="Add Question" id="add_question">
+        </form>
+    </div>
+</body>
