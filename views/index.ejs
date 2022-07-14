@@ -60,11 +60,14 @@
             })
                 .then((res) => res.json())
                 .then((body) => {
-                    console.log(body);
+                    // console.log(body);
                     if (body.status === 0) {
                         localStorage.setItem('token', `${body.authtoken}`)
                         window.location.href = '/quiz'
-                    } else {
+                    }else if (body.status === 2){
+                        document.getElementById('warning').innerHTML="Already submitted"
+                    } 
+                    else {
                         document.getElementById('warning').innerHTML="Invalid Credentials"
                     }
                 })

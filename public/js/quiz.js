@@ -229,7 +229,7 @@ const middleAnswer = () => {
         // console.log(value[key])
     }
     // console.log(arr);
-    fetch('/user/uploadAnswer', {
+    fetch('/user/uploadAnswermiddle', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -248,6 +248,12 @@ const middleAnswer = () => {
 
 
 const submitAnswer = () => {
+    var val = confirm('You want to submit. Are you sure?')
+    // console.log(val);
+    if(val===false){
+        return 
+    }
+    // return
     // console.log(mp);
     const arr = new Array();
     for (const key in mp) {

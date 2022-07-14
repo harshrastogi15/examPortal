@@ -47,6 +47,9 @@ router.post(
             }
             // const match = await bcrypt.compare(password, user.password);
             if (password == user.password) {
+                if(user.attempted==true){
+                    return res.json({ status: 2 })
+                }
                 data = {
                     id: user._id
                 }
@@ -104,6 +107,21 @@ router.post('/uploadAnswer', jwtaccess, async (req, res) => {
         // console.log(req.body.answer)
         var user = await User.findByIdAndUpdate(req.userid, {
             attempted: true,
+            answer: req.body.answer
+        });
+        if (!user) {
+            return res.status(400).json({ status: -1 });
+        }
+        res.json({ status: 0 });
+    } catch (error) {
+        res.json({ status: -1 })
+    }
+})
+
+router.post('/uploadAnswermiddle', jwtaccess, async (req, res) => {
+    try {
+        // console.log(req.body.answer)
+        var user = await User.findByIdAndUpdate(req.userid, {
             answer: req.body.answer
         });
         if (!user) {
