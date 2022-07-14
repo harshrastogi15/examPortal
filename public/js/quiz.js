@@ -109,7 +109,7 @@ const displayquestion = (data) => {
         for (j in data[i].choice) {
             // console.log(i);
             var idxoption = (Number)(j) + 1;
-            html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${idxoption} </span> ${data[i].choice[j]}</li>`
+            html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${idxoption}. </span> ${data[i].choice[j]}</li>`
         }
         html += `</ul>
                 <div class="answer"></div>
