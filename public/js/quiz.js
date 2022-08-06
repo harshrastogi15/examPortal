@@ -211,7 +211,7 @@ function setAnswer(id, i, answer) {
         value.style.background = 'white';
     }
     var value = document.getElementById(`${id}_option${i}`);
-    value.style.background = 'rgb(144, 188, 133)';
+    value.style.background = 'rgb(64, 145, 215)';
     middleAnswer();
     // console.log(mp);
 }
