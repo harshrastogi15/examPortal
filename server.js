@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const connect = require('./db')
-const port = process.env.CUS_PORT | process.env.PORT; 
+const port = process.env.PORT; 
 require('dotenv').config();
 const app = express();
 connect();
@@ -44,6 +44,6 @@ app.get('/',(req,res)=>{
 
 
 
-app.listen(port,()=>{
+app.listen(port,process.env.IP,()=>{
     console.log('server start at '+port);
 })
