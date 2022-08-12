@@ -41,6 +41,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.listen(process.env.PORT , () => {
+app.listen(process.env.PORT, process.env.IP , () => {
   console.log("server start at " + process.env.PORT);
 });
