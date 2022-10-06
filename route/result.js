@@ -11,6 +11,9 @@ router.get('/Generateresult', async (req, res) => {
     try {
         let user = await User.find({});
         for (i in user) {
+            if(user.answer==undefined){
+                continue;
+            }
             var marks = 0;
             if (user[i].stream === 'CSE') {
                 for (var j = 0; j < user[i].answer.length; j++) {
@@ -48,7 +51,7 @@ router.get('/Generateresult', async (req, res) => {
             await User.findByIdAndUpdate( user[i]._id, { marks: marks });
         }
         res.json({status:0});
-    } catch (error) {
+    } catch (err) {
         res.json({status:-1});
     }
 })

@@ -93,7 +93,7 @@ const displayquestion = (data) => {
     var htQuestion = ``;
     for (var i = 0; i < data.length; i++) {
         var idxnew = (Number)(i) + 1;
-        htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i + 1}</div>`
+        htQuestion += `<div class="short" onclick="previous(${i},${data.length})" id="optionchoose_${data[i].id}">${i + 1}</div>`
         html += `
         <div class="mcq" id="${i}">
                 <h1><span>${idxnew}.</span> ${data[i].question}</h1>
@@ -242,6 +242,10 @@ const middleAnswer = () => {
         .then((res) => res.json())
         .then((res) => {
             // console.log(res);
+            for(const i in arr){
+                // console.log(arr[i]);
+                document.getElementById(`optionchoose_${arr[i].key}`).style.background=`green`;
+            }
         })
         .catch()
 }

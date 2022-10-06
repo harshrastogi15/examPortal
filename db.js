@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-// const url2=`mongodb://localhost:27017/exam?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-const url = process.env.DB_URL;
+const url=`mongodb://localhost:27017/exam?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+// const url = process.env.DB_URL;
 
 
 const connect = async()=>{
