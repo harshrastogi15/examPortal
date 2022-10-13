@@ -76,7 +76,8 @@ router.post('/access', jwtaccess, async (req, res) => {
             stream: user.stream,
             applicationNo: user.applicationNo,
             program: user.program,
-            answer:user.answer
+            answer:user.answer,
+            visited:user.visited
         }
         res.json({ status: 0, data });
     } catch (error) {
@@ -123,6 +124,22 @@ router.post('/uploadAnswermiddle', jwtaccess, async (req, res) => {
         // console.log(req.body.answer)
         var user = await User.findByIdAndUpdate(req.userid, {
             answer: req.body.answer
+        });
+        if (!user) {
+            return res.status(400).json({ status: -1 });
+        }
+        res.json({ status: 0 });
+    } catch (error) {
+        res.json({ status: -1 })
+    }
+})
+
+
+router.post('/uploadvisited', jwtaccess, async (req, res) => {
+    try {
+        // console.log(req.body.answer)
+        var user = await User.findByIdAndUpdate(req.userid, {
+            visited: req.body.answer
         });
         if (!user) {
             return res.status(400).json({ status: -1 });

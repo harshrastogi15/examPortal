@@ -1,6 +1,7 @@
 var tempanswer = "";
 var mp = new Map();
 var arr = new Array();
+var vis = new Set();
 
 function logout() {
     localStorage.removeItem('token')
@@ -33,7 +34,9 @@ function fetchUser() {
                     </div>  
                 `;
                 arr = body.data.answer;
-                // console.log(arr);
+                for(const i in body.data.visited){
+                    vis.add(body.data.visited[i].key);
+                }
                 document.getElementById('Detail').innerHTML = html
                 getquiz(body.data.stream);
             } else {
@@ -93,7 +96,7 @@ const displayquestion = (data) => {
     var htQuestion = ``;
     for (var i = 0; i < data.length; i++) {
         var idxnew = (Number)(i) + 1;
-        htQuestion += `<div class="short" onclick="previous(${i},${data.length})" id="optionchoose_${data[i].id}">${i + 1}</div>`
+        htQuestion += `<div class="short" onclick="previous(${i},${data.length},'${data[i].id}')" id="optionchoose_${data[i].id}">${i + 1}</div>`
         html += `
         <div class="mcq" id="${i}">
                 <h1><span>${idxnew}.</span> ${data[i].question}</h1>
@@ -117,14 +120,14 @@ const displayquestion = (data) => {
 
         if (i > 0) {
             var idx = (Number)(i) - 1;
-            html += `<button type="submit" onclick="previous(${idx},${data.length})"> Previous </button>`
+            html += `<button type="submit" onclick="previous(${idx},${data.length},'${data[i].id}')"> Previous </button>`
         } else {
             html += `<button type="submit" disabled> Previous </button>`
         }
 
         if (Number(i) < data.length - 1) {
             var idx = (Number)(i) + 1;
-            html += `<button type="submit" onclick="next(${idx},${data.length})" > Next </button>`
+            html += `<button type="submit" onclick="next(${idx},${data.length},'${data[i].id}')" > Next </button>`
         } else {
             html += `<button type="submit" disabled> Next </button>`
         }
@@ -154,15 +157,15 @@ const displayquestion = (data) => {
     //     }
     // }
     // console.log(arr);
+    previous(0, data.length, data[0].id);
     for (var i in arr) {
         // console.log(i);
         setAnswer(arr[i].key, arr[i].option, arr[i].value)
     }
 
-    previous(0, data.length);
 }
 
-function previous(i, sz) {
+function previous(i, sz, quesid) {
     tempanswer = "";
     for (let index = 0; index < sz; index++) {
         var value = document.getElementById(`${index}`);
@@ -170,21 +173,27 @@ function previous(i, sz) {
     }
     var value = document.getElementById(`${i}`);
     value.style.display = 'block'
+    // console.log(quesid);
+    vis.add(quesid);
+    // console.log(vis);
+    visitedQuestion();
 }
 
-function next(i, sz) {
+function next(i, sz, quesid) {
     tempanswer = "";
     for (let index = 0; index < sz; index++) {
         var value = document.getElementById(`${index}`);
         value.style.display = 'none'
     }
     var value = document.getElementById(`${i}`);
-    value.style.display = 'block'
+    value.style.display = 'block';
+    vis.add(quesid);
+    // console.log(vis);
+    visitedQuestion();
 }
 
 
 // answer updation
-
 
 function setAnswer(id, i, answer) {
     tempanswer = answer;
@@ -245,6 +254,39 @@ const middleAnswer = () => {
             for(const i in arr){
                 // console.log(arr[i]);
                 document.getElementById(`optionchoose_${arr[i].key}`).style.background=`green`;
+            }
+        })
+        .catch()
+}
+
+// Visited 
+
+const visitedQuestion = ()=>{
+    const arr = new Array();
+    vis.forEach(function(key){
+        arr.push({
+            key: key
+        })
+    })
+    fetch('/user/uploadvisited', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'auth_token': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            answer: arr
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            // console.log(res);
+            for(const i in arr){
+                // console.log(arr[i]);
+                document.getElementById(`optionchoose_${arr[i].key}`).style.background=`red`;
+            }
+            for(const i in mp){
+                document.getElementById(`optionchoose_${i}`).style.background=`green`;
             }
         })
         .catch()
