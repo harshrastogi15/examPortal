@@ -2,6 +2,7 @@ var tempanswer = "";
 var mp = new Map();
 var arr = new Array();
 var vis = new Set();
+var markreveiw = new Set();
 
 function logout() {
     localStorage.removeItem('token')
@@ -36,6 +37,9 @@ function fetchUser() {
                 arr = body.data.answer;
                 for(const i in body.data.visited){
                     vis.add(body.data.visited[i].key);
+                }
+                for(const i in body.data.review){
+                    markreveiw.add(body.data.review[i].key);
                 }
                 document.getElementById('Detail').innerHTML = html
                 getquiz(body.data.stream);
@@ -124,6 +128,9 @@ const displayquestion = (data) => {
         } else {
             html += `<button type="submit" disabled> Previous </button>`
         }
+        html += `<div id="markReview_${data[i].id}">
+            <button type="submit" onclick="markasReview('${data[i].id}')"> Mark as Review </button>
+            </div>`
 
         if (Number(i) < data.length - 1) {
             var idx = (Number)(i) + 1;
@@ -162,7 +169,7 @@ const displayquestion = (data) => {
         // console.log(i);
         setAnswer(arr[i].key, arr[i].option, arr[i].value)
     }
-
+    startmarkasReview();
 }
 
 function previous(i, sz, quesid) {
@@ -177,6 +184,7 @@ function previous(i, sz, quesid) {
     vis.add(quesid);
     // console.log(vis);
     visitedQuestion();
+    startmarkasReview();
 }
 
 function next(i, sz, quesid) {
@@ -190,6 +198,7 @@ function next(i, sz, quesid) {
     vis.add(quesid);
     // console.log(vis);
     visitedQuestion();
+    startmarkasReview();
 }
 
 
@@ -259,6 +268,62 @@ const middleAnswer = () => {
         .catch()
 }
 
+
+// markasReview
+const markasReview = (key)=>{
+    // console.log("mark as revie")
+    markreveiw.add(key);
+    startmarkasReview();
+}
+
+
+const startmarkasReview = ()=>{
+    // console.log("mark as revie")
+    const arr = new Array();
+    markreveiw.forEach(function(key){
+        arr.push({
+            key: key
+        })
+    })
+    fetch('/user/uploadmarkasreview', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'auth_token': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            answer: arr
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            // console.log(res);
+            for(const i in arr){
+                // console.log(arr[i]);
+                document.getElementById(`optionchoose_${arr[i].key}`).style.background=`purple`;
+                document.getElementById(`markReview_${arr[i].key}`).innerHTML=`
+                <button type="submit" onclick="markasunReview('${arr[i].key}')"> Mark as Unreview </button>
+                `;
+            }
+            // for(const i in mp){
+            //     document.getElementById(`optionchoose_${i}`).style.background=`green`;
+            // }
+        })
+        .catch()
+    // console.log(arr);
+}
+
+const markasunReview = (key)=>{
+    markreveiw.delete(key)
+    // console.log(markreveiw);
+    document.getElementById(`markReview_${key}`).innerHTML=`
+                <button type="submit" onclick="markasReview('${key}')"> Mark as Review </button>
+                `;
+    visitedQuestion();
+    startmarkasReview();
+
+}
+
 // Visited 
 
 const visitedQuestion = ()=>{
@@ -288,6 +353,10 @@ const visitedQuestion = ()=>{
             for(const i in mp){
                 document.getElementById(`optionchoose_${i}`).style.background=`green`;
             }
+            // markreveiw.forEach(function(key){
+            //     document.getElementById(`optionchoose_${key}`).style.background=`purple`;
+            // })
+            
         })
         .catch()
 }

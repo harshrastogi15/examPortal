@@ -9,6 +9,7 @@ const schema = new mongoose.Schema(
         attempted: { type: Boolean, default: false },
         answer: [{ type: Object }],
         visited: [{ type: Object }],
+        review: [{ type: Object }],
         stream: { type: String, default: "" },
         program: { type: String, default: "" }
     }
