@@ -264,6 +264,7 @@ const middleAnswer = () => {
                 // console.log(arr[i]);
                 document.getElementById(`optionchoose_${arr[i].key}`).style.background=`green`;
             }
+            startmarkasReview();
         })
         .catch()
 }
@@ -356,6 +357,7 @@ const visitedQuestion = ()=>{
             // markreveiw.forEach(function(key){
             //     document.getElementById(`optionchoose_${key}`).style.background=`purple`;
             // })
+            startmarkasReview();
             
         })
         .catch()

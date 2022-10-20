@@ -14,6 +14,7 @@ const getDate =()=>{
       // console.log(res.SDate);
         compareDate = new Date(res.EDate);
         startDate = new Date(res.SDate);
+        presentDate = new Date(res.presentDate);
     })
     .catch()
 }
@@ -21,17 +22,17 @@ getDate()
 
 timer = setInterval(function() {
     getDate();
-  timeBetweenDates(startDate);
+  timeBetweenDates(startDate,presentDate);
 }, 1000);
 
-function timeBetweenDates(toDate) {
+function timeBetweenDates(toDate,present) {
   var dateEntered = toDate;
-  var now = new Date();
+  var now = present;
   checkvalue = true;
 
-  if(now > dateEntered){
-    submitAnswer();
-  }
+  // if(now > dateEntered){
+  //   submitAnswer();
+  // }
   var difference = dateEntered.getTime() - now.getTime();
 
   if (difference <= 0) {
