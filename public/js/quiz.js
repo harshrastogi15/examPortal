@@ -35,10 +35,10 @@ function fetchUser() {
                     </div>  
                 `;
                 arr = body.data.answer;
-                for(const i in body.data.visited){
+                for (const i in body.data.visited) {
                     vis.add(body.data.visited[i].key);
                 }
-                for(const i in body.data.review){
+                for (const i in body.data.review) {
                     markreveiw.add(body.data.review[i].key);
                 }
                 document.getElementById('Detail').innerHTML = html
@@ -116,16 +116,16 @@ const displayquestion = (data) => {
         for (j in data[i].choice) {
             // console.log(i);
             var idxoption = (Number)(j) + 1;
-            html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${String.fromCharCode(64+idxoption)}. </span> ${data[i].choice[j]}</li>`
+            html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${String.fromCharCode(64 + idxoption)}. </span> ${data[i].choice[j]}</li>`
         }
-        // <button type="submit" onclick="clearvalue(${idx},${data.length},'${data[i].id}')"> Clear </button>
         html += `</ul>
-                <div class="answer"></div>
+        <div class="answer"></div>
+        <p type="submit" class="clearvalues" onclick="clearvalue(${idx},${data.length},'${data[i].id}')"> Clear all </p>
                 <div class="differentquestion">`
 
         if (i > 0) {
             var idx = (Number)(i) - 1;
-            html += `<button type="submit" onclick="previous(${idx},${data.length},'${data[i].id}')"> Previous </button>`
+            html += `<button type="submit" onclick="previous(${idx},${data.length},'${data[idx].id}')"> Previous </button>`
         } else {
             html += `<button type="submit" disabled> Previous </button>`
         }
@@ -135,7 +135,7 @@ const displayquestion = (data) => {
 
         if (Number(i) < data.length - 1) {
             var idx = (Number)(i) + 1;
-            html += `<button type="submit" onclick="next(${idx},${data.length},'${data[i].id}')" > Next </button>`
+            html += `<button type="submit" onclick="next(${idx},${data.length},'${data[idx].id}')" > Next </button>`
         } else {
             html += `<button type="submit" disabled> Next </button>`
         }
@@ -197,21 +197,27 @@ function next(i, sz, quesid) {
     var value = document.getElementById(`${i}`);
     value.style.display = 'block';
     vis.add(quesid);
-    // console.log(vis);
+    console.log(vis);
     visitedQuestion();
     startmarkasReview();
 }
 
 
-// // clear answer
-// async function clearvalue(idx,len,id){
-//     console.log(id)
-//     console.log(mp)
-//     // mp.delete(id);
-    
-//     console.log(mp)
-//     middleAnswer();
-// }
+// clear answer
+async function clearvalue(idx, len, id) {
+    // console.log(id)
+    // console.log(mp)
+    mp.delete(id)
+    // console.log(mp.has(id))
+    // console.log(mp)
+    // ${data[i].id}_option${j}
+
+    for (let index = 0; index < 4; index++) {
+        document.getElementById(`${id}_option${index}`).style.backgroundColor = `white`
+    }
+    document.getElementById(`optionchoose_${id}`).style.background = `red`;
+    middleAnswer();
+}
 
 // answer updation
 
@@ -229,10 +235,14 @@ function setAnswer(id, i, answer) {
     //     // console.log(value)
     //     mp = value;
     // }
-    mp[id] = {
+    // mp[id] = {
+    //     answer: answer,
+    //     i: i
+    // }
+    mp.set(id, {
         answer: answer,
         i: i
-    }
+    })
     // var store = JSON.stringify(mp);
     // localStorage.setItem('Useranswer', store);
     for (let index = 0; index < 4; index++) {
@@ -241,19 +251,19 @@ function setAnswer(id, i, answer) {
     }
     var value = document.getElementById(`${id}_option${i}`);
     value.style.background = 'rgb(64, 145, 215)';
-    middleAnswer();
     // console.log(mp);
+    middleAnswer();
 }
 
 const middleAnswer = () => {
     // console.log(mp);
     const arr = new Array();
-    for (const key in mp) {
+    for (let key of mp.keys()) {
         // console.log(key)
         arr.push({
             key: key,
-            option: mp[key].i,
-            value: mp[key].answer
+            option: mp.get(key).i,
+            value: mp.get(key).answer
         })
         // console.log(value[key])
     }
@@ -271,9 +281,9 @@ const middleAnswer = () => {
         .then((res) => res.json())
         .then((res) => {
             // console.log(res);
-            for(const i in arr){
+            for (const i in arr) {
                 // console.log(arr[i]);
-                document.getElementById(`optionchoose_${arr[i].key}`).style.background=`green`;
+                document.getElementById(`optionchoose_${arr[i].key}`).style.background = `green`;
             }
             startmarkasReview();
         })
@@ -282,17 +292,17 @@ const middleAnswer = () => {
 
 
 // markasReview
-const markasReview = (key)=>{
+const markasReview = (key) => {
     // console.log("mark as revie")
     markreveiw.add(key);
     startmarkasReview();
 }
 
 
-const startmarkasReview = ()=>{
+const startmarkasReview = () => {
     // console.log("mark as revie")
     const arr = new Array();
-    markreveiw.forEach(function(key){
+    markreveiw.forEach(function (key) {
         arr.push({
             key: key
         })
@@ -310,10 +320,10 @@ const startmarkasReview = ()=>{
         .then((res) => res.json())
         .then((res) => {
             // console.log(res);
-            for(const i in arr){
+            for (const i in arr) {
                 // console.log(arr[i]);
-                document.getElementById(`optionchoose_${arr[i].key}`).style.background=`purple`;
-                document.getElementById(`markReview_${arr[i].key}`).innerHTML=`
+                document.getElementById(`optionchoose_${arr[i].key}`).style.background = `purple`;
+                document.getElementById(`markReview_${arr[i].key}`).innerHTML = `
                 <button type="submit" onclick="markasunReview('${arr[i].key}')"> Mark as Unreview </button>
                 `;
             }
@@ -325,10 +335,10 @@ const startmarkasReview = ()=>{
     // console.log(arr);
 }
 
-const markasunReview = (key)=>{
+const markasunReview = (key) => {
     markreveiw.delete(key)
     // console.log(markreveiw);
-    document.getElementById(`markReview_${key}`).innerHTML=`
+    document.getElementById(`markReview_${key}`).innerHTML = `
                 <button type="submit" onclick="markasReview('${key}')"> Mark as Review </button>
                 `;
     visitedQuestion();
@@ -338,9 +348,9 @@ const markasunReview = (key)=>{
 
 // Visited 
 
-const visitedQuestion = ()=>{
+const visitedQuestion = () => {
     const arr = new Array();
-    vis.forEach(function(key){
+    vis.forEach(function (key) {
         arr.push({
             key: key
         })
@@ -358,18 +368,18 @@ const visitedQuestion = ()=>{
         .then((res) => res.json())
         .then((res) => {
             // console.log(res);
-            for(const i in arr){
+            for (const i in arr) {
                 // console.log(arr[i]);
-                document.getElementById(`optionchoose_${arr[i].key}`).style.background=`red`;
+                document.getElementById(`optionchoose_${arr[i].key}`).style.background = `red`;
             }
-            for(const i in mp){
-                document.getElementById(`optionchoose_${i}`).style.background=`green`;
+            for (const i of mp.keys()) {
+                document.getElementById(`optionchoose_${i}`).style.background = `green`;
             }
             // markreveiw.forEach(function(key){
             //     document.getElementById(`optionchoose_${key}`).style.background=`purple`;
             // })
             startmarkasReview();
-            
+
         })
         .catch()
 }
@@ -399,16 +409,16 @@ const submitAnswer = () => {
     // return
     // console.log(mp);
     const arr = new Array();
-    for (const key in mp) {
+    for (let key of mp.keys()) {
         // console.log(key)
         arr.push({
             key: key,
-            option: mp[key].i,
-            value: mp[key].answer
+            option: mp.get(key).i,
+            value: mp.get(key).answer
         })
         // console.log(value[key])
     }
-    console.log(arr);
+    // console.log(arr);
     fetch('/user/uploadAnswer', {
         method: 'POST',
         headers: {
@@ -446,8 +456,8 @@ const submitAnswer2 = () => {
         // console.log(key)
         arr.push({
             key: key,
-            option: mp[key].i,
-            value: mp[key].answer
+            option: mp.get(key).i,
+            value: mp.get(key).answer
         })
         // console.log(value[key])
     }

@@ -65,7 +65,7 @@ body {
 }
 
 .mcq ul li:hover {
-    background: rgb(144, 188, 133);
+    background-color: rgb(144, 188, 133) !important;
 }
 
 .submitbutton {
@@ -194,4 +194,9 @@ footer {
     background-color: white;
     border-radius: 30px;
     margin: 5px;
+}
+
+.clearvalues{
+    cursor: pointer;
+    text-decoration: underline;
 }
