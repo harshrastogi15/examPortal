@@ -116,8 +116,9 @@ const displayquestion = (data) => {
         for (j in data[i].choice) {
             // console.log(i);
             var idxoption = (Number)(j) + 1;
-            html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${idxoption}. </span> ${data[i].choice[j]}</li>`
+            html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${String.fromCharCode(64+idxoption)}. </span> ${data[i].choice[j]}</li>`
         }
+        // <button type="submit" onclick="clearvalue(${idx},${data.length},'${data[i].id}')"> Clear </button>
         html += `</ul>
                 <div class="answer"></div>
                 <div class="differentquestion">`
@@ -143,7 +144,7 @@ const displayquestion = (data) => {
         if (Number(i) === data.length - 1) {
             // console.log(i);
             html += `<div class="submitbutton" id="submitbuttonID">
-                    <button type="submit" onclick="submitAnswercreate()"> Submit </button>
+                    <button type="submit" style ="background:blue;color:white;" onclick="submitAnswercreate()"> Submit </button>
                 </div>`
         }
         html += `</div>`
@@ -201,6 +202,16 @@ function next(i, sz, quesid) {
     startmarkasReview();
 }
 
+
+// // clear answer
+// async function clearvalue(idx,len,id){
+//     console.log(id)
+//     console.log(mp)
+//     // mp.delete(id);
+    
+//     console.log(mp)
+//     middleAnswer();
+// }
 
 // answer updation
 
