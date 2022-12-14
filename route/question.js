@@ -41,7 +41,8 @@ router.post("/addquestion",jwtaccess, upload.single('img'), (req, res) => {
   }
 
   try {
-    if (stream === "CSE") {
+    // console.log(stream);
+    if (stream === "Assistant Professor (Level-10) in CSE Department") {
       CSE.create(data)
         .then(() => {
           res.json({ status: 0 });
@@ -49,7 +50,7 @@ router.post("/addquestion",jwtaccess, upload.single('img'), (req, res) => {
         .catch(() => {
           res.json({ status: -1 });
         });
-    } else if (stream === "MEA") {
+    } else if (stream === "Assistant Professor (Level-10) in MEA Department") {
       MEA.create(data)
         .then(() => {
           res.json({ status: 0 });
@@ -57,7 +58,7 @@ router.post("/addquestion",jwtaccess, upload.single('img'), (req, res) => {
         .catch(() => {
           res.json({ status: -1 });
         });
-    } else if (stream === "ECE") {
+    } else if (stream === "Assistant Professor (Level-10) in ECE Department") {
       ECE.create(data)
         .then(() => {
           res.json({ status: 0 });
@@ -65,7 +66,7 @@ router.post("/addquestion",jwtaccess, upload.single('img'), (req, res) => {
         .catch(() => {
           res.json({ status: -1 });
         });
-    } else if (stream === "Math") {
+    } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)") {
       Math.create(data)
         .then(() => {
           res.json({ status: 0 });
@@ -197,7 +198,7 @@ router.post("/sendquestion", async (req, res) => {
   try {
     var stream = req.body.stream;
     var data = new Array();
-    if (stream === "CSE") {
+    if (stream === "Assistant Professor (Level-10) in CSE Department") {
       var ques = await CSE.find({});
       for (i in ques) {
         data.push({
@@ -208,7 +209,7 @@ router.post("/sendquestion", async (req, res) => {
         });
 
       }
-    } else if (stream === "MEA") {
+    } else if (stream === "Assistant Professor (Level-10) in MEA Department") {
       var ques = await MEA.find({});
       for (i in ques) {
         data.push({
@@ -219,7 +220,7 @@ router.post("/sendquestion", async (req, res) => {
         });
         
       }
-    } else if (stream === "ECE") {
+    } else if (stream === "Assistant Professor (Level-10) in ECE Department") {
       var ques = await ECE.find({});
       for (i in ques) {
         data.push({
@@ -229,7 +230,7 @@ router.post("/sendquestion", async (req, res) => {
           image: ques[i].img
         });
       }
-    } else if (stream === "Math") {
+    } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)" ) {
       var ques = await Math.find({});
       for (i in ques) {
         data.push({

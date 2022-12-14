@@ -11,7 +11,8 @@
 
 <body>
     <div class="logo">
-        <img src="../public/assets/Indian_Institute_of_Information_Technology,_Bhagalpur_logo.png" alt="" srcset="" width="100%" height="100% ">
+        <img src="../public/assets/Indian_Institute_of_Information_Technology,_Bhagalpur_logo.png" alt="" srcset=""
+            width="100%" height="100% ">
     </div>
     <div class="about">
         <h3>IIIT Bhagalpur</h3>
@@ -23,7 +24,7 @@
             <%- include ('./timer2.ejs') %>
         </div>
         <h1>Instruction</h1>
-        <ol>
+        <ol id="teachingandNonteaching">
             <li>
                 All the questions are of Objective Type and only one answer is correct.
             </li>
@@ -57,6 +58,9 @@
                 You are not permitted to leave the exam hall before 12:00 noon.
             </li>
         </ol>
+        <!-- <ol id="teachingandNonteaching">
+
+        </ol> -->
         <a href="/quiz">
             <button type="button">Next</button>
         </a>
@@ -66,6 +70,57 @@
         } else {
             window.location.href = '/'
         }
+
+        function fetchUser() {
+            fetch(`/user/access`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'auth_token': `${localStorage.getItem('token')}`
+                }
+            })
+                .then((res) => res.json())
+                .then((body) => {
+                    // console.log(body);
+                    if (body.status === 0) {
+                        if (body.data.stream.length === 0) {
+                            window.location.href = '/data'
+                        }
+                        // console.log(document.getElementById('teachingandNonteaching').innerHTML)
+                        console.log(body.data.program)
+                        let html =document.getElementById('teachingandNonteaching').innerHTML
+                        if(body.data.program==='Teaching'){
+                            html +=`
+                            <li>
+                                Instruction for Teaching
+                            </li>
+                                            
+                            `
+                        }else{
+                            html +=`
+                            <li>
+                                Instruction for NonTeaching
+                            </li>
+                                            
+                            `
+                            
+                        }
+                        // console.log(html)
+                        document.getElementById('teachingandNonteaching').innerHTML = html
+                        // console.log(document.getElementById('teachingandNonteaching'))
+                    } else {
+                        localStorage.removeItem('token')
+                        window.location.href = '/'
+                    }
+                })
+                .catch((error) => {
+                    // localStorage.removeItem('token')
+                    // window.location.href = '/'
+                });
+        }
+
+        fetchUser()
+
     </script>
 </body>
 

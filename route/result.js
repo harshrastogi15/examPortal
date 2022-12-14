@@ -15,14 +15,14 @@ router.get('/Generateresult', async (req, res) => {
                 continue;
             }
             var marks = 0;
-            if (user[i].stream === 'CSE') {
+            if (user[i].stream === 'Assistant Professor (Level-10) in CSE Department') {
                 for (var j = 0; j < user[i].answer.length; j++) {
                     var q = await CSE.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
                         marks++;
                     }
                 }
-            }else if (user[i].stream === 'ECE') {
+            }else if (user[i].stream === 'Assistant Professor (Level-10) in ECE Department') {
                 // console.log('ECE');
                 // console.log(user[i]._id);
                 for (var j = 0; j < user[i].answer.length; j++) {
@@ -32,14 +32,14 @@ router.get('/Generateresult', async (req, res) => {
                         marks++;
                     }
                 }
-            }else if (user[i].stream === 'MEA') {
+            }else if (user[i].stream === 'Assistant Professor (Level-10) in MEA Department') {
                 for (var j = 0; j < user[i].answer.length; j++) {
                     var q = await MEA.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
                         marks++;
                     }
                 }
-            }else if (user[i].stream === 'Math') {
+            }else if (user[i].stream === "Assistant Registrar (NT-3)" || user[i].stream === "Technical Officer (NT-5)" || user[i].stream === "Assistant Librarian (NT-6)" ) {
                 for (var j = 0; j < user[i].answer.length; j++) {
                     var q = await Math.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {

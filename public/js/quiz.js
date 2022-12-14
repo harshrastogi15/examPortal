@@ -30,8 +30,8 @@ function fetchUser() {
                         <h1>${body.data.name}</h1>
                     <div class="otherdetail">
                         <h4>Application No : ${body.data.applicationNo},</h4>
-                        <h4>Stream : ${body.data.stream},</h4>
-                        <h4>Program : ${body.data.program}</h4>
+                        <h4>Category of Post : ${body.data.program},</h4>
+                        <h4>Post applied for : ${body.data.stream}</h4>
                     </div>  
                 `;
                 arr = body.data.answer;

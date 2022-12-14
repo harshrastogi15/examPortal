@@ -1,4 +1,4 @@
-var stream = 'CSE';
+var stream = 'Assistant Professor (Level-10) in CSE Department';
 if (localStorage.getItem('admintoken')) {
 } else {
   window.location.href = '/admin'
@@ -7,7 +7,7 @@ if (localStorage.getItem('admintoken')) {
 
 const selectStream = (value) => {
   stream = value;
-  // console.log(stream);
+  console.log(stream);
   getquiz();
 }
 
@@ -51,7 +51,7 @@ const getquiz = () => {
   })
     .then((res) => res.json())
     .then((res) => {
-      // console.log(res);
+      console.log(res);
       if (res.status === 0) {
         displayquestion(res.data);
       }
