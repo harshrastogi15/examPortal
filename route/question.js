@@ -148,6 +148,36 @@ router.post("/sendAdminquestion", jwtaccess, async (req, res) => {
   }
 });
 
+router.post("/deleteAdminquetion", jwtaccess, async (req, res) => {
+  try {
+    const id = req.userid;
+    // console.log(id);
+    if (id !== process.env.ADMINNO) {
+      // console.log(id);
+      return res.json({ status: -1 });
+    }
+    var stream = req.body.stream;
+    var data = new Array();
+    if (stream === "Assistant Professor (Level-10) in CSE Department") {
+      // var ques = await CSE.find({});
+      await CSE.findByIdAndDelete(req.body.id)
+    } else if (stream === "Assistant Professor (Level-10) in MEA Department") {
+      // var ques = await MEA.find({});
+      await MEA.findByIdAndDelete(req.body.id)
+    } else if (stream === "Assistant Professor (Level-10) in ECE Department") {
+      // var ques = await ECE.find({});
+      await ECE.findByIdAndDelete(req.body.id)
+    } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)") {
+      // var ques = await Math.find({});
+      await Math.findByIdAndDelete(req.body.id)
+    }
+
+    res.json({ status: 0});
+  } catch (error) {
+    res.json({ status: -1 });
+  }
+});
+
 
 
 router.post("/sendquestion", async (req, res) => {

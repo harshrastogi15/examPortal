@@ -92,7 +92,10 @@ const displayquestion = (data) => {
       html += `<li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>`
     }
     html += `</ul>
-              <div class="answer">Answer : ${data[i].answer}</div>`
+              <div class = "answerDelete">
+              <div class="answer">Answer : ${data[i].answer}</div>
+              <button class="delete" onclick= "deletethisquestion('${data[i].id}')">Delete</button>
+              </div>`
     html += `</div>`
   
     html += `</div>`
@@ -102,3 +105,33 @@ const displayquestion = (data) => {
 }
 
 getquiz();
+
+
+function deletethisquestion(id){
+  // console.log('delete')
+  // console.log(id)
+  fetch(`/question/deleteAdminquetion`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'auth_token': `${localStorage.getItem('admintoken')}`
+    },
+    body: JSON.stringify({
+      'stream': `${stream}`,
+      'id' : `${id}`
+    })
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      // console.log(res);
+      if (res.status === 0) {
+        alert("Question Deleted successfully");
+        getquiz();
+      }else{
+        alert("Unable to Delete");
+      }
+    })
+    .catch(()=>{
+      alert("Unable to Delete");
+    })
+}
