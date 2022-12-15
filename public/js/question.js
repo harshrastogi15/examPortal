@@ -7,7 +7,7 @@ if (localStorage.getItem('admintoken')) {
 
 const selectStream = (value) => {
   stream = value;
-  console.log(stream);
+  // console.log(stream);
   getquiz();
 }
 
@@ -40,10 +40,11 @@ document.getElementById("question_txt").addEventListener("submit", function (e) 
 
 
 const getquiz = () => {
-  fetch(`/question/sendquestion`, {
+  fetch(`/question/sendAdminquestion`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'auth_token': `${localStorage.getItem('admintoken')}`
     },
     body: JSON.stringify({
       'stream': `${stream}`
@@ -51,7 +52,7 @@ const getquiz = () => {
   })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 0) {
         displayquestion(res.data);
       }
@@ -88,33 +89,12 @@ const displayquestion = (data) => {
     for (j in data[i].choice) {
       // console.log(i);
       var idxoption = (Number)(j) + 1;
-      html += `<li id="${data[i].id}_option${j}" onclick="setAnswer('${data[i].id}','${j}','${data[i].choice[j]}')"><span> ${idxoption} </span> ${data[i].choice[j]}</li>`
+      html += `<li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>`
     }
     html += `</ul>
-              <div class="answer"></div>`
-    // <div class="differentquestion">`
-
-    // if (i > 0) {
-    //     var idx = (Number)(i) - 1;
-    //     html += `<button type="submit" onclick="previous(${idx},${data.length})"> Previous </button>`
-    // } else {
-    //     html += `<button type="submit" disabled> Previous </button>`
-    // }
-
-    // if (Number(i) < data.length - 1) {
-    //     var idx = (Number)(i) + 1;
-    //     html += `<button type="submit" onclick="next(${idx},${data.length})" > Next </button>`
-    // } else {
-    //     html += `<button type="submit" disabled> Next </button>`
-    // }
-
+              <div class="answer">Answer : ${data[i].answer}</div>`
     html += `</div>`
-    // if (Number(i) === data.length - 1) {
-    //     // console.log(i);
-    //     html += `<div class="submitbutton">
-    //             <button type="submit" onclick="submitAnswer()"> Submit </button>
-    //         </div>`
-    // }
+  
     html += `</div>`
   }
   document.getElementById('quizdisplay').innerHTML = html;

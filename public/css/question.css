@@ -3,6 +3,7 @@
     margin: auto;
     display: flex;
     /* flex-direction: column; */
+    justify-content: space-around;
 }
 
 .formfill{
@@ -30,6 +31,8 @@
 .display{
     width: 55%;
     border-left: 2px solid black;
+    height: 80vh;
+    overflow: auto;
 }
 
 .question{
@@ -44,10 +47,13 @@
 .mcq{
     width: 80%;
     margin: auto;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .mcq h1 span{
-    font-size: 24px;
+    font-size: 20px;
     padding: 0;
     margin: 0;
     font-weight: 700;
@@ -56,7 +62,7 @@
 .mcq h1{
     padding: 0;
     margin: 0;
-    font-size: 26px;
+    font-size: 22px;
     font-weight: normal;
 }
 
@@ -73,9 +79,13 @@
 }
 
 .mcq ul li{
-    font-size: 22px;
+    font-size: 16px;
     margin: 0;
     padding: 0;
     padding:10px 15px;
     cursor: pointer;
+}
+
+.answer{
+    font-size: 20px;
 }

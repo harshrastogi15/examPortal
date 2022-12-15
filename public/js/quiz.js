@@ -394,7 +394,7 @@ const submitAnswercreate = () => {
             <option value="YES">YES</option>
         </select>
         <div>
-            <button type="submit" onclick="submitAnswer()"> Submit </button>
+            <button type="submit" onclick="submitAnswer()" style ="background:blue;color:white;"> Submit </button>
         </div>
     `
     data.innerHTML = newhtml;
