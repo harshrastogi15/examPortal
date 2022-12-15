@@ -75,7 +75,7 @@ const displayquestion = (data) => {
     // htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i + 1}</div>`
     html += `
       <div class="mcq" id="${i}">
-              <h1><span>${idxnew}.</span> ${data[i].question}</h1>
+              <h1><span>${idxnew}. </span> ${data[i].question} <br> <input class="${data[i].id}_hideupdate" style="display:none;" id="${data[i].id}_quesChange" value = '${data[i].question}'></input></h1>
               <ul>`
 
     if (data[i].image.contentType) {
@@ -88,11 +88,28 @@ const displayquestion = (data) => {
     for (j in data[i].choice) {
 
       var idxoption = (Number)(j) + 1;
-      html += `<li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>`
+      html += `
+      <li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>
+      
+      <li class="${data[i].id}_hideupdate" style="display:none;" ><span> ${String.fromCharCode(idxoption + 64)}.  </span><input id="${data[i].id}_option${j}_changeoption" value = '${data[i].choice[j]}'></input></li>
+      
+      `
     }
     html += `</ul>
               <div class = "answerDelete">
+              <div>
               <div class="answer">Answer : ${data[i].answer}</div>
+              <select class="${data[i].id}_hideupdate" style="display:none;" name="answer" id="${data[i].id}_changeanswer" required>
+                    <option value="${data[i].answer}">${data[i].answer}</option>
+                    <option value="option1">A</option>
+                    <option value="option2">B</option>
+                    <option value="option3">C</option>
+                    <option value="option4">D</option>
+                </select>
+              </div>
+              <button class="delete" id="${data[i].id}_hideupdateoption" onclick= "updatethisquestion('${data[i].id}')" >Update</button>
+              <button class="delete ${data[i].id}_hideupdate" style="display:none;" onclick= "updateFinalthisquestion('${data[i].id}')" >Update</button>
+              <button class="delete ${data[i].id}_hideupdate" style="display:none;" onclick= "closethisquestion('${data[i].id}')" >Close</button>
               <button class="delete" onclick= "deletethisquestion('${data[i].id}')">Delete</button>
               </div>`
     html += `</div>`
@@ -132,4 +149,61 @@ function deletethisquestion(id){
     .catch(()=>{
       alert("Unable to Delete");
     })
+}
+
+function updatethisquestion(id){
+    let value = document.getElementsByClassName(`${id}_hideupdate`);
+    document.getElementById(`${id}_hideupdateoption`).style.display='none';
+    // console.log(value)
+    Array.from(value).forEach((e)=>{
+      // console.log(e)
+      e.style.display = 'block'
+    })
+  }
+  
+  function closethisquestion(id){
+    let value = document.getElementsByClassName(`${id}_hideupdate`);
+    document.getElementById(`${id}_hideupdateoption`).style.display='block';
+    // console.log(value)
+    Array.from(value).forEach((e)=>{
+      // console.log(e)
+      e.style.display = 'none'
+    })
+}
+
+function updateFinalthisquestion(id){
+    let data = {
+      id:id,
+      stream : stream,
+      ques : document.getElementById(`${id}_quesChange`).value,
+      option1 : document.getElementById(`${id}_option${0}_changeoption`).value,
+      option2 : document.getElementById(`${id}_option${1}_changeoption`).value,
+      option3 : document.getElementById(`${id}_option${2}_changeoption`).value,
+      option4 : document.getElementById(`${id}_option${3}_changeoption`).value,
+      answer : document.getElementById(`${id}_changeanswer`).value
+    }  
+    // console.log(data);
+
+    fetch(`/question/updatequestion`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'auth_token': `${localStorage.getItem('admintoken')}`,
+      },
+      body: JSON.stringify(data)
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        if (res.status === 0) {
+          alert("Question Updated successfully");
+          getquiz();
+        }else{
+          alert("Unable to update");
+        }
+      })
+      .catch(()=>{
+        alert("Unable to update");
+      })
+
 }

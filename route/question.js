@@ -82,6 +82,56 @@ router.post("/addquestion", jwtaccess, upload.single('img'), (req, res) => {
   }
 });
 
+router.post("/updatequestion", jwtaccess, upload.single('img'), async(req, res) => {
+  const id = req.userid;
+  // console.log(id);
+  if (id !== process.env.ADMINNO) {
+    // console.log(id);
+    return res.json({ status: -1 });
+  }
+  var stream = req.body.stream;
+  var arr = new Array();
+  arr.push(req.body.option1);
+  arr.push(req.body.option2);
+  arr.push(req.body.option3);
+  arr.push(req.body.option4);
+  var answer = req.body[req.body.answer];
+  var data = {
+    ques: req.body.ques,
+    choice: arr,
+    answer : answer
+  }
+  // if (req.file !== undefined) {
+  //   data['img'] = {
+  //     data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+  //     contentType: 'image/png'
+  //   }
+  //   fs.unlinkSync(path.join(__dirname + "/uploads/" + req.file.filename));
+  // }
+
+  try {
+    console.log(stream);
+    if (stream === "Assistant Professor (Level-10) in CSE Department") {
+      // console.log(data);
+      await CSE.findByIdAndUpdate({_id:req.body.id},data)
+      res.json({status:0});
+    } else if (stream === "Assistant Professor (Level-10) in MEA Department") {
+      await MEA.findByIdAndUpdate({_id:req.body.id},data)
+      res.json({status:0});
+    } else if (stream === "Assistant Professor (Level-10) in ECE Department") {
+      await ECE.findByIdAndUpdate({_id:req.body.id},data)
+      res.json({status:0});
+    } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)") {
+      await Math.findByIdAndUpdate({_id:req.body.id},data)
+      res.json({status:0});
+    } else {
+      res.json({ status: -1 });
+    }
+  } catch (err) {
+    res.json({ status: -1 });
+  }
+});
+
 
 router.post("/sendAdminquestion", jwtaccess, async (req, res) => {
   try {
