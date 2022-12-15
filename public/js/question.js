@@ -7,7 +7,6 @@ if (localStorage.getItem('admintoken')) {
 
 const selectStream = (value) => {
   stream = value;
-  // console.log(stream);
   getquiz();
 }
 
@@ -22,7 +21,7 @@ document.getElementById("question_txt").addEventListener("submit", function (e) 
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.status == 0) {
         // console.log(data);
         alert("Question added successfully");
@@ -68,7 +67,7 @@ const arrayBufferToBase64 = (buffer) => {
 };
 
 const displayquestion = (data) => {
-  // console.log(data);
+
   var html = ``;
   var htQuestion = `Total Question : ${data.length}`;
   for (var i = 0; i < data.length; i++) {
@@ -80,14 +79,14 @@ const displayquestion = (data) => {
               <ul>`
 
     if (data[i].image.contentType) {
-      // console.log('image');
+
       var img = arrayBufferToBase64(data[i]['image'].data.data);
       var imgSrc = `data:image/${data[i].image.contentType};base64,${img.toString('base64')}`;
       html += `<img src='${imgSrc}' alt='server error'/>`
     }
 
     for (j in data[i].choice) {
-      // console.log(i);
+
       var idxoption = (Number)(j) + 1;
       html += `<li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>`
     }
@@ -108,8 +107,7 @@ getquiz();
 
 
 function deletethisquestion(id){
-  // console.log('delete')
-  // console.log(id)
+
   fetch(`/question/deleteAdminquetion`, {
     method: 'POST',
     headers: {
@@ -123,7 +121,7 @@ function deletethisquestion(id){
   })
     .then((res) => res.json())
     .then((res) => {
-      // console.log(res);
+  
       if (res.status === 0) {
         alert("Question Deleted successfully");
         getquiz();
