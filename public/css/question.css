@@ -103,3 +103,7 @@
 .hideupdate{
     display: none;
 }
+
+input[type='text']{
+    width: 90%;
+}

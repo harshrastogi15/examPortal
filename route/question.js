@@ -82,7 +82,47 @@ router.post("/addquestion", jwtaccess, upload.single('img'), (req, res) => {
   }
 });
 
-router.post("/updatequestion", jwtaccess, upload.single('img'), async(req, res) => {
+router.post("/updatequestionImage", jwtaccess, upload.single('img'), async (req, res) => {
+  const id = req.userid;
+  // console.log(id);
+  if (id !== process.env.ADMINNO) {
+    // console.log(id);
+    return res.json({ status: -1 });
+  }
+  var stream = req.headers.stream;
+  var data = {}
+  if (req.file !== undefined) {
+    data['img'] = {
+      data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+      contentType: 'image/png'
+    }
+    fs.unlinkSync(path.join(__dirname + "/uploads/" + req.file.filename));
+  }
+
+  try {
+    // console.log(stream);
+    if (stream === "Assistant Professor (Level-10) in CSE Department") {
+      await CSE.findByIdAndUpdate({ _id: req.headers.id }, data)
+      res.json({ status: 0 });
+    } else if (stream === "Assistant Professor (Level-10) in MEA Department") {
+      await MEA.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
+    } else if (stream === "Assistant Professor (Level-10) in ECE Department") {
+      await ECE.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
+    } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)") {
+      await Math.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
+    } else {
+      res.json({ status: -1 });
+    }
+    // res.json({ status: 0 });
+  } catch (err) {
+    res.json({ status: -1 });
+  }
+});
+
+router.post("/updatequestion", jwtaccess, async (req, res) => {
   const id = req.userid;
   // console.log(id);
   if (id !== process.env.ADMINNO) {
@@ -99,7 +139,7 @@ router.post("/updatequestion", jwtaccess, upload.single('img'), async(req, res) 
   var data = {
     ques: req.body.ques,
     choice: arr,
-    answer : answer
+    answer: answer
   }
   // if (req.file !== undefined) {
   //   data['img'] = {
@@ -113,17 +153,17 @@ router.post("/updatequestion", jwtaccess, upload.single('img'), async(req, res) 
     console.log(stream);
     if (stream === "Assistant Professor (Level-10) in CSE Department") {
       // console.log(data);
-      await CSE.findByIdAndUpdate({_id:req.body.id},data)
-      res.json({status:0});
+      await CSE.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
     } else if (stream === "Assistant Professor (Level-10) in MEA Department") {
-      await MEA.findByIdAndUpdate({_id:req.body.id},data)
-      res.json({status:0});
+      await MEA.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
     } else if (stream === "Assistant Professor (Level-10) in ECE Department") {
-      await ECE.findByIdAndUpdate({_id:req.body.id},data)
-      res.json({status:0});
+      await ECE.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
     } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)") {
-      await Math.findByIdAndUpdate({_id:req.body.id},data)
-      res.json({status:0});
+      await Math.findByIdAndUpdate({ _id: req.body.id }, data)
+      res.json({ status: 0 });
     } else {
       res.json({ status: -1 });
     }
@@ -151,7 +191,7 @@ router.post("/sendAdminquestion", jwtaccess, async (req, res) => {
           choice: ques[i].choice,
           id: ques[i]._id,
           image: ques[i].img,
-          answer : ques[i].answer
+          answer: ques[i].answer
         });
 
       }
@@ -163,7 +203,7 @@ router.post("/sendAdminquestion", jwtaccess, async (req, res) => {
           choice: ques[i].choice,
           id: ques[i]._id,
           image: ques[i].img,
-          answer : ques[i].answer
+          answer: ques[i].answer
         });
 
       }
@@ -175,7 +215,7 @@ router.post("/sendAdminquestion", jwtaccess, async (req, res) => {
           choice: ques[i].choice,
           id: ques[i]._id,
           image: ques[i].img,
-          answer : ques[i].answer
+          answer: ques[i].answer
         });
       }
     } else if (stream === "Assistant Registrar (NT-3)" || stream === "Technical Officer (NT-5)" || stream === "Assistant Librarian (NT-6)") {
@@ -186,7 +226,7 @@ router.post("/sendAdminquestion", jwtaccess, async (req, res) => {
           choice: ques[i].choice,
           id: ques[i]._id,
           image: ques[i].img,
-          answer : ques[i].answer
+          answer: ques[i].answer
         });
 
       }
@@ -222,7 +262,7 @@ router.post("/deleteAdminquetion", jwtaccess, async (req, res) => {
       await Math.findByIdAndDelete(req.body.id)
     }
 
-    res.json({ status: 0});
+    res.json({ status: 0 });
   } catch (error) {
     res.json({ status: -1 });
   }

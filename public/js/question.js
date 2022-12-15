@@ -1,3 +1,4 @@
+
 var stream = 'Assistant Professor (Level-10) in CSE Department';
 if (localStorage.getItem('admintoken')) {
 } else {
@@ -75,14 +76,22 @@ const displayquestion = (data) => {
     // htQuestion += `<div class="short" onclick="previous(${i},${data.length})">${i + 1}</div>`
     html += `
       <div class="mcq" id="${i}">
-              <h1><span>${idxnew}. </span> ${data[i].question} <br> <input class="${data[i].id}_hideupdate" style="display:none;" id="${data[i].id}_quesChange" value = '${data[i].question}'></input></h1>
+              <h1><span>${idxnew}. </span> ${data[i].question} <br> <input  type="text" class="${data[i].id}_hideupdate" style="display:none;" id="${data[i].id}_quesChange" value = '${data[i].question}'></input></h1>
               <ul>`
 
     if (data[i].image.contentType) {
 
       var img = arrayBufferToBase64(data[i]['image'].data.data);
       var imgSrc = `data:image/${data[i].image.contentType};base64,${img.toString('base64')}`;
-      html += `<img src='${imgSrc}' alt='server error'/>`
+      html += `<img src='${imgSrc}' alt='server error'/>
+      <div class="${data[i].id}_hideupdate" style="display:none;">
+        <form id = "${data[i].id}_changeImage" >
+        <label for="image">Upload Image</label>
+        <input type="file" name="img" id="image">
+        <input type="button" onclick="changeimageoption('${data[i].id}')" value="Add Image">
+        </form>
+      </div>
+      `
     }
 
     for (j in data[i].choice) {
@@ -91,7 +100,7 @@ const displayquestion = (data) => {
       html += `
       <li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>
       
-      <li class="${data[i].id}_hideupdate" style="display:none;" ><span> ${String.fromCharCode(idxoption + 64)}.  </span><input id="${data[i].id}_option${j}_changeoption" value = '${data[i].choice[j]}'></input></li>
+      <li class="${data[i].id}_hideupdate" style="display:none;" ><span> ${String.fromCharCode(idxoption + 64)}.  </span><input type="text" id="${data[i].id}_option${j}_changeoption" value = '${data[i].choice[j]}'></input></li>
       
       `
     }
@@ -206,4 +215,34 @@ function updateFinalthisquestion(id){
         alert("Unable to update");
       })
 
+}
+
+
+function changeimageoption(id){
+  console.log(id);
+  fetch(`/question/updatequestionImage`, {
+    method: 'POST',
+    headers: {
+      'auth_token': `${localStorage.getItem('admintoken')}`,
+      'stream' : stream,
+      'id' : id
+    },
+    body: new FormData(document.getElementById(`${id}_changeImage`)),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(data);
+      if (data.status == 0) {
+        // console.log(data);
+        alert("Image updated successfully");
+        getquiz();
+      }else {
+        alert("Error adding image");
+        localStorage.removeItem('admintoken')
+        window.location.href = '/admin'
+      }
+    })
+    .catch((err) => {
+      alert("Error adding image");
+    });
 }
