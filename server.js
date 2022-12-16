@@ -29,6 +29,14 @@ app.get("/addquiz", (req, res) => {
   res.render("question.ejs");
 });
 
+app.get("/submitform", (req, res) => {
+  res.render("UserSubmitForm.ejs");
+});
+
+app.get("/participants", (req, res) => {
+  res.render("participant.ejs");
+});
+
 app.get("/instruction", (req, res) => {
   res.render("instruction");
 });

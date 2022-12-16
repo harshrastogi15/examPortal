@@ -47,7 +47,7 @@ router.post(
             }
             // const match = await bcrypt.compare(password, user.password);
             if (password == user.password) {
-                if(user.attempted==true){
+                if (user.attempted == true) {
                     return res.json({ status: 2 })
                 }
                 data = {
@@ -76,15 +76,49 @@ router.post('/access', jwtaccess, async (req, res) => {
             stream: user.stream,
             applicationNo: user.applicationNo,
             program: user.program,
-            answer:user.answer,
-            visited:user.visited,
-            review : user.review
+            answer: user.answer,
+            visited: user.visited,
+            review: user.review
         }
         res.json({ status: 0, data });
     } catch (error) {
         res.status(500).json({ status: -2 });
     }
 })
+
+
+router.post('/sendDatatoAdmin', jwtaccess, async (req, res) => {
+    try {
+        const id = req.userid;
+        // console.log(id);
+        if (id !== process.env.ADMINNO) {
+            // console.log(id);
+            return res.json({ status: -1 });
+        }
+        let data = await User.find({});
+        res.json({ status: 0, data });
+    } catch (error) {
+        res.status(500).json({ status: -2 });
+    }
+})
+
+router.post('/userDatatoAdmin', jwtaccess, async (req, res) => {
+    try {
+        const id = req.userid;
+        // console.log(id);
+        if (id !== process.env.ADMINNO) {
+            // console.log(id);
+            return res.json({ status: -1 });
+        }
+        // console.log(req.body);
+        let data = await User.findOne({_id:req.body.id});
+        // console.log(data)
+        res.json({ status: 0, data });
+    } catch (error) {
+        res.status(500).json({ status: -2 });
+    }
+})
+
 
 
 router.post('/adddata', jwtaccess, async (req, res) => {
