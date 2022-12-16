@@ -29,7 +29,7 @@ getParticipantsDetail();
 
 
 function displayparticpants(data){
-    console.log(data)
+    // console.log(data)
     let html = `<table>
                 <tr>
                     <th>S.No.</th>
@@ -58,4 +58,24 @@ function displayparticpants(data){
     html += `</table>`
 
     document.getElementById('participantsDatadesign').innerHTML = html
+}
+
+
+function generateResult(){
+    fetch('/admin/result/Generateresult')
+    .then((res)=>res.json())
+    .then((res)=>{
+        // console.log(res)
+        if(res.status==0){
+
+            alert('Result Created')
+            getParticipantsDetail();
+        }else{
+
+            alert('Unable to generate')
+        }
+    })
+    .catch((err)=>{
+        alert('Unable to generate')
+    })
 }

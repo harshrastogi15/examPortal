@@ -111,7 +111,7 @@ const displayquestion = (data) => {
         }
         html += `</ul>
                 <div class = "answerDelete">
-                <div class="answer">Answer : ${data[i].answer}</div>
+                <div class="answer">Correct Answer : ${data[i].answer}</div>
                 <p id = "${data[i].id}_useranswer"></p>
                 <p id = "${data[i].id}_Visited" style="color:red; font-weight:900;">Not Visited</p>
                 </div>
