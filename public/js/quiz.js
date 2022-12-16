@@ -20,12 +20,10 @@ function fetchUser() {
     })
         .then((res) => res.json())
         .then((body) => {
-            // console.log(body);
             if (body.status === 0) {
                 if (body.data.stream.length === 0) {
                     window.location.href = '/data'
                 }
-                // console.log(body.data)
                 var html = `
                         <h1>${body.data.name}</h1>
                     <div class="otherdetail">
@@ -64,7 +62,7 @@ const getquiz = (stream) => {
 
     var now = new Date();
     if (now < startDate && window.location.pathname !== '/instruction') {
-        // console.log('noew');
+    
         window.location.href = '/instruction'
     }
 
@@ -79,7 +77,7 @@ const getquiz = (stream) => {
     })
         .then((res) => res.json())
         .then((res) => {
-            // console.log(res);
+           
             if (res.status === 0) {
                 displayquestion(res.data);
             }
@@ -197,7 +195,7 @@ function next(i, sz, quesid) {
     var value = document.getElementById(`${i}`);
     value.style.display = 'block';
     vis.add(quesid);
-    console.log(vis);
+    // console.log(vis);
     visitedQuestion();
     startmarkasReview();
 }
