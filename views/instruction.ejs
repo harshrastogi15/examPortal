@@ -20,7 +20,7 @@
     </div>
     <div class="inst">
         <div class="timer" style="text-align: center;">
-            Time
+            Time Remaining
             <%- include ('./timer2.ejs') %>
         </div>
         <h1>Instruction</h1>
@@ -62,9 +62,10 @@
 
         </ol> -->
         <a href="/quiz">
-            <button type="button">Next</button>
+            <button type="button" id="nextbutton">Next</button>
         </a>
     </div>
+    <script src="../public/js/timer2.js"> </script>
     <script>
         if (localStorage.getItem('token')) {
         } else {

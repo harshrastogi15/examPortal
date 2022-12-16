@@ -1,8 +1,8 @@
 var timer;
 var checkvalue = false;
-
-
-
+let next = document.getElementById("nextbutton");
+next.disabled = true
+// console.log(next.disabled);
 var compareDate = new Date('July 16, 2022, 12:30:00');
 var startDate = new Date('July 16, 2022, 11:00:00');
 // compareDate.setDate(compareDate.getDate() + 1); //just for this demo today + 7 days
@@ -36,8 +36,21 @@ function timeBetweenDates(toDate,present) {
   var difference = dateEntered.getTime() - now.getTime();
 
   if (difference <= 0) {
-
+    next.disabled = false
     clearInterval(timer);
+    var seconds = Math.floor(0 / 1000);    
+    var minutes = Math.floor(0 / 60);
+    var hours = Math.floor(0 / 60);
+    var days = Math.floor(0 / 24);
+
+    hours %= 3;
+    minutes %=60;
+    seconds %= 60;
+
+    $("#days").text(days);
+    $("#hours").text(hours);
+    $("#minutes").text(minutes);
+    $("#seconds").text(seconds);
   
   } else {
     
