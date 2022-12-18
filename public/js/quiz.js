@@ -385,25 +385,26 @@ const visitedQuestion = () => {
 
 const submitAnswercreate = () => {
     let data = document.getElementById('submitbuttonID');
+    // You want to submit. Are you sure?
+    // <select name="program" id="submitprogram" required>
+    //     <option value="NO">NO</option>
+    //     <option value="YES">YES</option>
+    // </select>
     var newhtml = `
-        You want to submit. Are you sure?
-        <select name="program" id="submitprogram" required>
-            <option value="NO">NO</option>
-            <option value="YES">YES</option>
-        </select>
         <div>
-            <button type="submit" onclick="submitAnswer()" style ="background:blue;color:white;"> Submit </button>
+            You want to submit.
+            <button type="submit" onclick="submitAnswer()" style ="background:blue;color:white;"> YES </button>
         </div>
     `
     data.innerHTML = newhtml;
 }
 
 const submitAnswer = () => {
-    value = document.getElementById('submitprogram').value;
+    // value = document.getElementById('submitprogram').value;
     // console.log(value);
-    if (value === 'NO') {
-        return;
-    }
+    // if (value === 'NO') {
+    //     return;
+    // }
     // return
     // console.log(mp);
     const arr = new Array();

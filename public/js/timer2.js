@@ -37,6 +37,7 @@ function timeBetweenDates(toDate,present) {
 
   if (difference <= 0) {
     next.disabled = false
+    next.style.backgroundColor = 'Green'
     clearInterval(timer);
     var seconds = Math.floor(0 / 1000);    
     var minutes = Math.floor(0 / 60);
