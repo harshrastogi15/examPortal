@@ -9,20 +9,20 @@ let userVisited;
 var stream = 'Assistant Professor (Level-10) in CSE Department';
 if (localStorage.getItem('admintoken')) {
 } else {
-  window.location.href = '/admin'
+    window.location.href = '/admin'
 }
 
-const getuser = ()=>{
+const getuser = () => {
     data = {
-        id : userID
+        id: userID
     }
     fetch(`/user/userDatatoAdmin`, {
         method: 'POST',
         headers: {
-            'content-Type':'application/json',
+            'content-Type': 'application/json',
             'auth_token': `${localStorage.getItem('admintoken')}`
         },
-        body:JSON.stringify(data)
+        body: JSON.stringify(data)
     })
         .then((res) => res.json())
         .then((data) => {
@@ -51,12 +51,12 @@ const getuser = ()=>{
         .catch((err) => {
             alert("Error");
         });
-} 
+}
 
 getuser();
 
 const getquiz = () => {
-    
+
     fetch(`/question/sendAdminquestion`, {
         method: 'POST',
         headers: {
@@ -113,7 +113,7 @@ const displayquestion = (data) => {
                 <div class = "answerDelete">
                 <div class="answer">Correct Answer : ${data[i].answer}</div>
                 <p id = "${data[i].id}_useranswer"></p>
-                <p id = "${data[i].id}_Visited" style="color:red; font-weight:900;">Not Visited</p>
+                <p id = "${data[i].id}_Visited" style="color:red; font-weight:900;">Not Aswered</p>
                 </div>
                 <div>
                 `
@@ -128,18 +128,18 @@ const displayquestion = (data) => {
 }
 
 
-function userAnswerShow(){
+function userAnswerShow() {
     // ${data[i].id}_useranswer
     // console.log(userVisited)
-    userAnswer.forEach((e)=>{
+    userAnswer.forEach((e) => {
         // console.log(e)
-        document.getElementById(`${e.key}_useranswer`).innerHTML = `<p>Your Answer: ${String.fromCharCode(Number(e.option)+65)}. ${e.value}</p>`
-    })
-
-    userVisited.forEach((e)=>{
-        // console.log(e)
-        document.getElementById(`${e.key}_Visited`).innerHTML = `Visited`
+        document.getElementById(`${e.key}_useranswer`).innerHTML = `<p>Your Answer: ${String.fromCharCode(Number(e.option) + 65)}. ${e.value}</p>`
+        document.getElementById(`${e.key}_Visited`).innerHTML = `Answered`
         document.getElementById(`${e.key}_Visited`).style.color = `green`
     })
+
+    // userVisited.forEach((e)=>{
+    //     // console.log(e)
+    // })
 
 }

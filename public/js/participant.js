@@ -30,6 +30,17 @@ getParticipantsDetail();
 
 function displayparticpants(data){
     // console.log(data)
+
+    data.sort(function(a, b) {
+        var keyA = new Date(a.marks),
+          keyB = new Date(b.marks);
+        // Compare the 2 dates
+        if (keyA < keyB) return 1;
+        if (keyA > keyB) return -1;
+        return 0;
+      });
+      
+
     let html = `<table>
                 <tr>
                     <th>S.No.</th>
