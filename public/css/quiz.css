@@ -81,6 +81,10 @@ body {
     font-size: 16px;
 }
 
+.mcq button:hover{
+    background-color: rgb(188, 188, 229);
+}
+
 .differentquestion {
     margin-top: 20px;
     display: flex;
@@ -199,4 +203,8 @@ footer {
 .clearvalues{
     cursor: pointer;
     text-decoration: underline;
+}
+
+.submitFinal:hover{
+    background-color: green !important;
 }

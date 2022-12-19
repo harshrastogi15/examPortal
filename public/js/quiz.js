@@ -392,8 +392,8 @@ const submitAnswercreate = () => {
     // </select>
     var newhtml = `
         <div>
-            You want to submit.
-            <button type="submit" onclick="submitAnswer()" style ="background:blue;color:white;"> YES </button>
+            Are you want to submit?
+            <button type="submit" class="submitFinal" onclick="submitAnswer()" style ="background:blue;color:white;"> YES </button>
         </div>
     `
     data.innerHTML = newhtml;
