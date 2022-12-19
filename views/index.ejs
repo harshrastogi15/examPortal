@@ -100,7 +100,7 @@
                         localStorage.setItem('token', `${body.authtoken}`)
                         window.location.href = '/data'
                     }else if (body.status === 2){
-                        document.getElementById('warning').innerHTML="Already submitted"
+                        document.getElementById('warning').innerHTML="Already submitted/login"
                     } 
                     else {
                         document.getElementById('warning').innerHTML="Invalid Credentials"

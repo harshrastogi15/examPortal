@@ -53,6 +53,7 @@ router.post(
                 data = {
                     id: user._id
                 }
+                await User.findOneAndUpdate({ applicationNo: applicationNo },{attempted : true})
                 var authtoken = jwt.sign(data, process.env.JWT_TOKEN);
                 res.status(200).json({ status: 0, authtoken });
             } else {
