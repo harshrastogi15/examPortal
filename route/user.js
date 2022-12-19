@@ -95,7 +95,8 @@ router.post('/sendDatatoAdmin', jwtaccess, async (req, res) => {
             // console.log(id);
             return res.json({ status: -1 });
         }
-        let data = await User.find({});
+        // console.log(req.body.stream)
+        let data = await User.find({stream : req.body.stream});
         res.json({ status: 0, data });
     } catch (error) {
         res.status(500).json({ status: -2 });

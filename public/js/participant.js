@@ -1,11 +1,17 @@
+// const { json } = require("body-parser");
 
+let stream = `Assistant Professor (Level-10) in ECE Department`;
 
 function getParticipantsDetail() {
     fetch(`/user/sendDatatoAdmin`, {
         method: 'POST',
         headers: {
+            'Content-Type' :'application/json',
             'auth_token': `${localStorage.getItem('admintoken')}`
-        }
+        },
+        body : JSON.stringify({
+            stream : stream
+        })
     })
         .then((res) => res.json())
         .then((data) => {
@@ -26,6 +32,11 @@ function getParticipantsDetail() {
 }
 
 getParticipantsDetail();
+
+function changestream(val){
+    stream = val
+    getParticipantsDetail();
+}
 
 
 function displayparticpants(data){
