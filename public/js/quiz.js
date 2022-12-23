@@ -451,7 +451,7 @@ const submitAnswer2 = () => {
     // return
     // console.log(mp);
     const arr = new Array();
-    for (const key in mp) {
+    for (let key of mp.keys()) {
         // console.log(key)
         arr.push({
             key: key,
@@ -460,7 +460,7 @@ const submitAnswer2 = () => {
         })
         // console.log(value[key])
     }
-    console.log(arr);
+    // console.log(arr);
     fetch('/user/uploadAnswer', {
         method: 'POST',
         headers: {
