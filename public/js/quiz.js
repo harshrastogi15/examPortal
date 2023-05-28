@@ -28,9 +28,9 @@ function fetchUser() {
                         <h1>${body.data.name}</h1>
                     <div class="otherdetail">
                         <h4>Application No : ${body.data.applicationNo},</h4>
-                        <h4>Category of Post : ${body.data.program},</h4>
-                        <h4>Post applied for : ${body.data.stream}</h4>
-                    </div>  
+                        <h4>Program : ${body.data.program},</h4>
+                        <h4>Department : ${body.data.stream}</h4>
+                    </div>
                 `;
                 arr = body.data.answer;
                 for (const i in body.data.visited) {
@@ -62,7 +62,7 @@ const getquiz = (stream) => {
 
     var now = new Date();
     if (now < startDate && window.location.pathname !== '/instruction') {
-    
+
         window.location.href = '/instruction'
     }
 
@@ -77,7 +77,7 @@ const getquiz = (stream) => {
     })
         .then((res) => res.json())
         .then((res) => {
-           
+
             if (res.status === 0) {
                 displayquestion(res.data);
             }
@@ -344,7 +344,7 @@ const markasunReview = (key) => {
 
 }
 
-// Visited 
+// Visited
 
 const visitedQuestion = () => {
     const arr = new Array();
@@ -446,7 +446,7 @@ const submitAnswer2 = () => {
     // var val = confirm('You want to submit. Are you sure?')
     // console.log(val);
     // if(val===false){
-    //     return 
+    //     return
     // }
     // return
     // console.log(mp);

@@ -1,8 +1,9 @@
 // const { json } = require("body-parser");
 
-let stream = `Assistant Professor (Level-10) in ECE Department`;
+let stream = CSEvalue;
 
 function getParticipantsDetail() {
+    // console.log(stream);
     fetch(`/user/sendDatatoAdmin`, {
         method: 'POST',
         headers: {
@@ -50,15 +51,15 @@ function displayparticpants(data){
         if (keyA > keyB) return -1;
         return 0;
       });
-      
+
 
     let html = `<table>
                 <tr>
                     <th>S.No.</th>
                     <th>Application No.</th>
                     <th>Name</th>
-                    <th>Category of Post</th>
-                    <th>Post Applied for</th>
+                    <th>Program</th>
+                    <th>Department</th>
                     <th>Marks Obtained</th>
                     <th>Submission</th>
                 </tr>`;

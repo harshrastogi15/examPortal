@@ -7,29 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail</title>
     <style>
-        body{
+        body {
             font-family: Verdana;
         }
-        .logo{
+
+        .logo {
             width: 100px;
             height: 100px;
             margin: auto;
             padding: 10px;
         }
-        .about{
+
+        .about {
             width: fit-content;
             margin: auto;
             text-align: center;
         }
-        .about h3{
-            font-family: Verdana ;
+
+        .about h3 {
+            font-family: Verdana;
             margin: 0;
             font-weight: normal;
             font-size: 20px;
         }
-        
-        .about h4{
-            font-family: Verdana ;
+
+        .about h4 {
+            font-family: Verdana;
             margin: 0;
             font-weight: normal;
             font-size: 20px;
@@ -64,7 +67,8 @@
 
 <body>
     <div class="logo">
-        <img src="../public/assets/Indian_Institute_of_Information_Technology,_Bhagalpur_logo.png" alt="" srcset="" width="100%" height="100% ">
+        <img src="../public/assets/Indian_Institute_of_Information_Technology,_Bhagalpur_logo.png" alt="" srcset=""
+            width="100%" height="100% ">
     </div>
     <div class="about">
         <h3>IIIT Bhagalpur</h3>
@@ -83,8 +87,8 @@
                 <label for="program">Category of Post</label>
                 <select name="program" id="program" required>
                     <option value="">--select--</option>
-                    <option value="Teaching">Teaching</option>
-                    <option value="Non-Teaching">Non-Teaching</option>
+                    <option value="MTech">MTech</option>
+                    <option value="PhD">PhD</option>
                 </select>
             </div>
             <div class="inputdiv">
@@ -103,29 +107,36 @@
         </form>
     </div>
     <script>
+        let CSEvalue = `<%- CSEvalue %>`
+        let ECEvalue = `<%- ECEvalue %>`
+        let MEAvalue = `<%- MEAvalue %>`
+        let Mathvalue = `<%- Mathvalue %>`
+
         if (localStorage.getItem('token')) {
         } else {
             window.location.href = '/'
         }
 
-        document.getElementById("program").addEventListener("change",(e)=>{
+        document.getElementById("program").addEventListener("change", (e) => {
             // console.log(e.target.value)
-            if(e.target.value==='Teaching'){
+            if (e.target.value === 'PhD') {
                 // console.log("GET")
 
                 document.getElementById('stream').innerHTML = `
                     <option value="">--select--</option>
-                    <option value="Assistant Professor (Level-10) in CSE Department">Assistant Professor (Level-10) in CSE Department</option>
-                    <option value="Assistant Professor (Level-10) in ECE Department">Assistant Professor (Level-10) in ECE Department</option>
-                    <option value="Assistant Professor (Level-10) in MEA Department">Assistant Professor (Level-10) in MEA Department</option>
+                    <option value="${CSEvalue}">${CSEvalue}</option>
+                    <option value="${ECEvalue}">${ECEvalue}</option>
+                    <option value="${MEAvalue}">${MEAvalue}</option>
+                    <option value="${Mathvalue}">${Mathvalue}</option>
                 `
 
-            }else if(e.target.value==='Non-Teaching'){
+            } else if (e.target.value === 'MTech') {
                 document.getElementById('stream').innerHTML = `
                 <option value="">--select--</option>
-                    <option value="Assistant Registrar (NT-3)">Assistant Registrar (NT-3)</option>
-                    <option value="Technical Officer (NT-5)">Technical Officer (NT-5)</option>
-                    <option value="Assistant Librarian (NT-6)">Assistant Librarian (NT-6)</option>
+                    <option value="${CSEvalue}">${CSEvalue}</option>
+                    <option value="${ECEvalue}">${ECEvalue}</option>
+                    <option value="${MEAvalue}">${MEAvalue}</option>
+                    <option value="${Mathvalue}">${Mathvalue}</option>
                 `
             }
         })

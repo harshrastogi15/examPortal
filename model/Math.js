@@ -11,4 +11,4 @@ const schema = new mongoose.Schema({
     answer: { type: String },
 });
 
-module.exports = mongoose.model('nonTeaching', schema);
+module.exports = mongoose.model('math', schema);

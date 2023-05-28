@@ -16,12 +16,12 @@
         <button onclick="generateResult()" style="text-align: center; margin: 20px; padding: 10px 20px; cursor: pointer;">Result</button>
     </div>
     <div style="width: 80%; margin: 10px auto; ">
-        <button style="margin: 10px;" onclick="changestream('Assistant Professor (Level-10) in CSE Department')">Assistant Professor (Level-10) in CSE Department</button>
-        <button style="margin: 10px;" onclick="changestream('Assistant Professor (Level-10) in ECE Department')">Assistant Professor (Level-10) in ECE Department</button>
-        <button style="margin: 10px;" onclick="changestream('Assistant Professor (Level-10) in MEA Department')">Assistant Professor (Level-10) in MEA Department</button>
-        <button style="margin: 10px;" onclick="changestream('Assistant Registrar (NT-3)')">Assistant Registrar (NT-3)</button>
-        <button style="margin: 10px;" onclick="changestream('Technical Officer (NT-5)')">Technical Officer (NT-5)</button>
-        <button style="margin: 10px;" onclick="changestream('Assistant Librarian (NT-6)')">Assistant Librarian (NT-6)</button>
+        <button style="margin: 10px;" onclick="changestream('<%- CSEvalue %>')"><%- CSEvalue %></button>
+        <button style="margin: 10px;" onclick="changestream('<%- ECEvalue %>')"><%- ECEvalue %></button>
+        <button style="margin: 10px;" onclick="changestream('<%- MEAvalue %>')"><%- MEAvalue %></button>
+        <button style="margin: 10px;" onclick="changestream('<%- Mathvalue %>')"><%- Mathvalue %></button>
+        <!-- <button style="margin: 10px;" onclick="changestream('Technical Officer (NT-5)')">Technical Officer (NT-5)</button>
+        <button style="margin: 10px;" onclick="changestream('Assistant Librarian (NT-6)')">Assistant Librarian (NT-6)</button> -->
     </div>
     <div id="participantsDatadesign">
         <table>
@@ -43,6 +43,12 @@
             </tr> -->
         </table>
     </div>
+    <script>
+        let CSEvalue = `<%- CSEvalue %>`
+        let ECEvalue = `<%- ECEvalue %>`
+        let MEAvalue = `<%- MEAvalue %>`
+        let Mathvalue = `<%- Mathvalue %>`
+    </script>
     <script src="../public/js/participant.js"></script>
 </body>
 </html>

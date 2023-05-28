@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const url=`mongodb://localhost:27017/exam?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+const url=`mongodb://0.0.0.0:27017/entrance?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
 // const url = process.env.DB_URL;
 
 

@@ -1,5 +1,5 @@
 
-var stream = 'Assistant Professor (Level-10) in CSE Department';
+var stream = 'Computer Science Engineering';
 if (localStorage.getItem('admintoken')) {
 } else {
   window.location.href = '/admin'
@@ -99,9 +99,9 @@ const displayquestion = (data) => {
       var idxoption = (Number)(j) + 1;
       html += `
       <li id="${data[i].id}_option${j}" ><span> ${String.fromCharCode(idxoption + 64)}.  </span> ${data[i].choice[j]}</li>
-      
+
       <li class="${data[i].id}_hideupdate" style="display:none;" ><span> ${String.fromCharCode(idxoption + 64)}.  </span><input type="text" id="${data[i].id}_option${j}_changeoption" value = '${data[i].choice[j]}'></input></li>
-      
+
       `
     }
     html += `</ul>
@@ -122,7 +122,7 @@ const displayquestion = (data) => {
               <button class="delete" onclick= "deletethisquestion('${data[i].id}')">Delete</button>
               </div>`
     html += `</div>`
-  
+
     html += `</div>`
   }
   document.getElementById('quizdisplay').innerHTML = html;
@@ -147,7 +147,7 @@ function deletethisquestion(id){
   })
     .then((res) => res.json())
     .then((res) => {
-  
+
       if (res.status === 0) {
         alert("Question Deleted successfully");
         getquiz();
@@ -169,7 +169,7 @@ function updatethisquestion(id){
       e.style.display = 'block'
     })
   }
-  
+
   function closethisquestion(id){
     let value = document.getElementsByClassName(`${id}_hideupdate`);
     document.getElementById(`${id}_hideupdateoption`).style.display='block';
@@ -190,7 +190,7 @@ function updateFinalthisquestion(id){
       option3 : document.getElementById(`${id}_option${2}_changeoption`).value,
       option4 : document.getElementById(`${id}_option${3}_changeoption`).value,
       answer : document.getElementById(`${id}_changeanswer`).value
-    }  
+    }
     // console.log(data);
 
     fetch(`/question/updatequestion`, {
@@ -231,15 +231,15 @@ function changeimageoption(id){
   })
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       if (data.status == 0) {
         // console.log(data);
         alert("Image updated successfully");
         getquiz();
       }else {
         alert("Error adding image");
-        localStorage.removeItem('admintoken')
-        window.location.href = '/admin'
+        // localStorage.removeItem('admintoken')
+        // window.location.href = '/admin'
       }
     })
     .catch((err) => {

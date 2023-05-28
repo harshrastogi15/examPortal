@@ -5,6 +5,7 @@ const Math = require('../model/Math');
 const MEA = require('../model/MEA');
 const User = require('../model/user');
 const router = express.Router();
+const {CSEvalue, ECEvalue, MEAvalue, Mathvalue} = require('../config/config')
 
 router.get('/Generateresult', async (req, res) => {
 
@@ -17,14 +18,14 @@ router.get('/Generateresult', async (req, res) => {
             }
             var marks = 0;
             // console.log(user[i].stream)
-            if (user[i].stream === 'Assistant Professor (Level-10) in CSE Department') {
+            if (user[i].stream === CSEvalue) {
                 for (var j = 0; j < user[i].answer.length; j++) {
                     var q = await CSE.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
                         marks++;
                     }
                 }
-            }else if (user[i].stream === 'Assistant Professor (Level-10) in ECE Department') {
+            }else if (user[i].stream === ECEvalue) {
                 // console.log('ECE');
                 // console.log(user[i]._id);
                 for (var j = 0; j < user[i].answer.length; j++) {
@@ -34,7 +35,7 @@ router.get('/Generateresult', async (req, res) => {
                         marks++;
                     }
                 }
-            }else if (user[i].stream == "Assistant Professor (Level-10) in MEA Department") {
+            }else if (user[i].stream == MEAvalue) {
                 // console.log("HERE")
                 for (var j = 0; j < user[i].answer.length; j++) {
                     var q = await MEA.findById(user[i].answer[j].key);
@@ -42,7 +43,7 @@ router.get('/Generateresult', async (req, res) => {
                         marks++;
                     }
                 }
-            }else if (user[i].stream === "Assistant Registrar (NT-3)" || user[i].stream === "Technical Officer (NT-5)" || user[i].stream === "Assistant Librarian (NT-6)" ) {
+            }else if (user[i].stream === Mathvalue) {
                 for (var j = 0; j < user[i].answer.length; j++) {
                     var q = await Math.findById(user[i].answer[j].key);
                     if (user[i].answer[j].value === q.answer) {
