@@ -37,8 +37,8 @@ const getuser = () => {
                 document.getElementById('userDetail').innerHTML = `
                     <p>Application No.: ${data.data.applicationNo}</p>
                     <p>Name : ${data.data.name}</p>
-                    <p>Category : ${data.data.program}</p>
-                    <p>Post : ${data.data.stream}</p>
+                    <p>Program : ${data.data.program}</p>
+                    <p>Department : ${data.data.stream}</p>
                 `
                 // console.log(userAnswer)
                 getquiz();

@@ -27,10 +27,10 @@
                 <label for="stream">Stream</label>
                 <select name="stream" id="stream" required>
                     <option value="">--select--</option>
-                    <option value="Computer Science Engineering">Computer Science Engineering</option>
-                    <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
-                    <option value="Mechatronics Engineering">Mechatronics Engineering</option>
-                    <option value="Math">Math</option>
+                    <option value="<%- CSEvalue %>"><%- CSEvalue %></option>
+                    <option value="<%- ECEvalue %>"><%- ECEvalue %></option>
+                    <option value="<%- MEAvalue %>"><%- MEAvalue %></option>
+                    <option value="<%- Mathvalue %>"><%- Mathvalue %></option>
                 </select>
                 <label for="ques">Question</label>
                 <input type="text" name="ques" placeholder="Enter Question" id="ques">
@@ -60,10 +60,10 @@
             <div class="question">
                 <label for="stream">Stream</label>
                 <select name="stream" id="stream" onchange="selectStream(this.value)" required>
-                    <option value="Computer Science Engineering">Computer Science Engineering</option>
-                    <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
-                    <option value="Mechatronics Engineering">Mechatronics Engineering</option>
-                    <option value="Math">Math</option>
+                    <option value="<%- CSEvalue %>"><%- CSEvalue %></option>
+                    <option value="<%- ECEvalue %>"><%- ECEvalue %></option>
+                    <option value="<%- MEAvalue %>"><%- MEAvalue %></option>
+                    <option value="<%- Mathvalue %>"><%- Mathvalue %></option>
                 </select>
                 <div class="questionShow" id="questionshow">
                 </div>
@@ -73,5 +73,11 @@
             </div>
         </div>
     </div>
+    <script>
+        let CSEvalue = `<%- CSEvalue %>`
+        let ECEvalue = `<%- ECEvalue %>`
+        let MEAvalue = `<%- MEAvalue %>`
+        let Mathvalue = `<%- Mathvalue %>`
+    </script>
     <script src="../public/js/question.js"></script>
 </body>
