@@ -31,6 +31,5 @@ To get started with Quiz Platform, follow these steps:
 2. Install the required dependencies by running `npm install`.
 3. Configure the database and environment variables.
 4. Start the server using `npm start`.
-5. Access the Quiz Platform application through the provided URL.
 
 We believe that Quiz Platform will revolutionize the way you conduct quizzes and exams. Experience the convenience, efficiency, and reliability of Quiz Platform and streamline your examination workflow.
