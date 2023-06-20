@@ -9,10 +9,19 @@ Quiz Platform is a computer-based quiz test software designed to simplify the pr
 - **Secure and Reliable**: Quiz Platform ensures the security and integrity of the exams with advanced encryption algorithms and secure user authentication. Protect sensitive data and prevent unauthorized access.
 
 - **Automated Grading**: Quiz Platform automates the grading process, saving valuable time and effort for administrators. Instantly generate results.
+---
 
-![ScreenShot of Platform](/images/1st.png)
-![ScreenShot of Platform](/images/2nd.png)
-![ScreenShot of Platform](/images/3rd.png)
+![ScreenShot of Platform 1](/images/1st.png)
+
+---
+
+![ScreenShot of Platform 2](/images/2nd.png)
+
+---
+
+![ScreenShot of Platform 3](/images/3rd.png)
+
+---
 
 ## Getting Started
 
